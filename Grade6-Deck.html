@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Grade 6 AI &amp; Robotics — Join Botics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:          #FFFFFF;
+    --bg-tint:     #F4F8FD;
+    --card:        #F2F6FB;
+    --card-2:      #E8EFF8;
+    --border:      #D6E3F2;
+    --ink:         #0F2545;
+    --ink-soft:    #6E89B0;
+    --accent:      #1E5FBF;
+    --accent-2:    #2D8FE3;
+    --accent-soft: #DCEAF7;
+    --accent-mid:  #A8C8EC;
+    --purple:      #5B47C7;
+    --purple-soft: #E3DEF5;
+    --header-strip:#0F2545;
+  }
+  html, body { margin:0; padding:0; background:#0a0f1a; color:var(--ink); font-family:'Inter', system-ui, sans-serif; }
+
+  deck-stage { --slide-w: 1920; --slide-h: 1080; }
+  deck-stage > section {
+    width:1920px; height:1080px;
+    background: var(--bg);
+    color: var(--ink);
+    position:relative;
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+
+  .topbar {
+    position:absolute; left:0; right:0; top:0;
+    height:140px; background: var(--header-strip);
+    display:flex; align-items:center; padding:0 72px;
+    color:#fff; gap:32px;
+  }
+  .topbar h2 {
+    font-family:'Lora', Georgia, serif;
+    font-weight:700; font-size:40px; margin:0;
+    color:#fff; letter-spacing:.2px;
+    flex:1; min-width:0;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .topbar .badge {
+    flex-shrink:0;
+    font-size:18px; font-weight:500; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent-mid);
+  }
+  .topbar .badge.coding { color: #ffe07a; }
+  .topbar .badge.ai     { color: #b1f0c8; }
+  .topbar .badge.three  { color: #d9c6ff; }
+  .slide-num {
+    position:absolute; bottom:32px; right:48px;
+    font-size:16px; color:var(--ink-soft); letter-spacing:.15em;
+  }
+  .footer-mark {
+    position:absolute; bottom:32px; left:72px;
+    font-size:16px; color:var(--ink-soft); letter-spacing:.15em; text-transform:uppercase;
+  }
+
+  /* ============== SLIDE 1 — title ============== */
+  .s1 { display:flex; }
+  .s1 .left {
+    flex: 0 0 58%;
+    background:#fff;
+    padding:140px 90px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+  }
+  .s1 .left::before {
+    content:""; position:absolute; left:90px; top:140px; width:96px; height:6px;
+    background:var(--accent);
+  }
+  .s1 h1 {
+    font-family:'Lora', Georgia, serif;
+    font-size:148px; line-height:1.02; margin:0;
+    color:var(--accent); font-weight:700; letter-spacing:-1.5px;
+  }
+  .s1 h1 .ink { color:var(--ink); }
+  .s1 .subtitle {
+    margin-top:60px;
+    font-size:24px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ink-soft); font-weight:500;
+  }
+  .s1 .tagline {
+    margin-top:24px;
+    font-size:30px; font-family:'Lora', Georgia, serif;
+    color:var(--ink); line-height:1.3; font-style:italic; max-width:840px;
+  }
+  .s1 .pillrow {
+    margin-top:48px; display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .s1 .pillrow span {
+    padding:10px 22px; border:2px solid var(--accent-mid);
+    border-radius:999px; font-size:20px; color:var(--accent); font-weight:600;
+    letter-spacing:.06em;
+  }
+  .s1 .right {
+    flex:1;
+    background:var(--accent-soft);
+    padding:80px 64px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .s1 .right .card {
+    width:100%;
+    background:#fff;
+    border:3px solid var(--accent);
+    border-radius:24px;
+    padding:64px 48px;
+    text-align:center;
+    box-shadow: 0 24px 48px -28px rgba(15,37,69,0.35);
+    position:relative; z-index:2;
+  }
+  .s1 .right .label {
+    font-size:22px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--accent); font-weight:600;
+  }
+  .s1 .right .grade {
+    font-family:'Lora', Georgia, serif;
+    font-size:96px; font-weight:700; color:var(--ink); margin-top:24px;
+    line-height:1;
+  }
+  .s1 .right .pill {
+    display:inline-block; margin-top:32px;
+    padding:14px 28px; border-radius:999px;
+    background:var(--accent); color:#fff;
+    font-weight:600; letter-spacing:.15em; font-size:18px;
+  }
+  .s1 .right .robot {
+    position:absolute; width:240px; height:240px;
+    color: var(--accent); opacity:.22;
+  }
+  .s1 .right .robot.r1 { top:60px; right:40px; }
+  .s1 .right .robot.r2 { bottom:60px; left:-30px; width:180px; height:180px; }
+  .s1 .right .robot svg { width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* ============== SLIDE 2 — Overview cards ============== */
+  .s2 { padding-top:140px; }
+  .s2 .body { padding:64px 96px 0; }
+  .s2 .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; }
+  .s2 .ic {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:42px 38px;
+    display:flex; flex-direction:column; gap:18px;
+    min-height:230px;
+  }
+  .s2 .ic .icon {
+    width:60px; height:60px;
+    border-radius:14px;
+    background: var(--accent-soft);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--accent);
+  }
+  .s2 .ic .icon svg { width:34px; height:34px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .s2 .ic h3 { margin:0; font-family:'Lora', Georgia, serif; font-size:28px; color:var(--ink); font-weight:700; line-height:1.15; }
+  .s2 .ic p { margin:0; font-size:19px; color:var(--ink-soft); line-height:1.4; }
+  .s2 .ic.tag-code .icon { background: #FFF4D6; color: #B58800; }
+  .s2 .ic.tag-ai   .icon { background: #DCF4E3; color: #21864B; }
+  .s2 .ic.tag-3d   .icon { background: var(--purple-soft); color: var(--purple); }
+  .s2 .ic.tag-game .icon { background: #FDE8FF; color: #8B2BAD; }
+
+  /* ============== SLIDE 3 — Learning areas ============== */
+  .s3 { padding-top:140px; }
+  .s3 .body { padding:64px 96px 0; }
+  .s3 .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; }
+  .s3 .tile {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:40px 36px;
+    display:flex; flex-direction:column; gap:18px;
+    min-height:260px;
+  }
+  .s3 .tile .icon {
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .s3 .tile .icon svg { width:34px; height:34px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .s3 .tile h3 { margin:0; font-family:'Lora', Georgia, serif; font-size:28px; font-weight:700; color:var(--accent); line-height:1.1; }
+  .s3 .tile p { margin:0; font-size:19px; color:var(--ink); line-height:1.4; }
+  .s3 .tile.tag-code .icon { background:#B58800; }
+  .s3 .tile.tag-code h3 { color:#B58800; }
+  .s3 .tile.tag-ai .icon { background:#21864B; }
+  .s3 .tile.tag-ai h3 { color:#21864B; }
+  .s3 .tile.tag-3d .icon { background:var(--purple); }
+  .s3 .tile.tag-3d h3 { color:var(--purple); }
+  .s3 .tile.tag-game .icon { background:#8B2BAD; }
+  .s3 .tile.tag-game h3 { color:#8B2BAD; }
+
+  /* ============== SLIDE 4 — Journey timeline (6 steps) ============== */
+  .s4 { padding-top:140px; }
+  .s4 .body {
+    padding:64px 96px 64px;
+    height: calc(100% - 140px);
+    box-sizing:border-box;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .s4 .intro {
+    text-align:center; margin-bottom:56px;
+    font-size:26px; color:var(--ink-soft); max-width:1100px; margin-left:auto; margin-right:auto;
+  }
+  .s4 .path {
+    display:grid; grid-template-columns:repeat(6, 1fr); gap:18px;
+    position:relative;
+  }
+  .s4 .path::before {
+    content:""; position:absolute;
+    top:74px; left:6%; right:6%; height:4px;
+    background: var(--accent-mid);
+    z-index:0;
+  }
+  .s4 .step {
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    gap:18px;
+  }
+  .s4 .step .ring {
+    width:148px; height:148px; border-radius:50%;
+    background:#fff;
+    border:6px solid var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--accent);
+    box-shadow: 0 12px 28px -16px rgba(15,37,69,.4);
+  }
+  .s4 .step .ring svg { width:64px; height:64px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .s4 .step h3 { margin:0; font-family:'Lora', Georgia, serif; font-size:30px; color:var(--ink); font-weight:700; }
+  .s4 .step .ix { font-size:13px; letter-spacing:.3em; color:var(--accent); font-weight:600; }
+  .s4 .step p { margin:0; font-size:17px; color:var(--ink-soft); line-height:1.4; }
+
+  /* ============== Project slide (sp) ============== */
+  .sp { padding-top:140px; }
+  .sp .body {
+    padding:48px 80px 56px;
+    display:grid; grid-template-columns: 1fr 1fr;
+    gap:40px;
+    height: calc(100% - 140px); box-sizing:border-box;
+  }
+  .sp .visual {
+    background: linear-gradient(135deg, #DCEAF7 0%, #BFD9F2 100%);
+    border:1px solid var(--accent-mid);
+    border-radius:24px;
+    padding:48px;
+    position:relative;
+    overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center;
+  }
+  .sp.tag-code .visual { background: linear-gradient(135deg, #FFF1C7 0%, #FBE198 100%); border-color: #E5B85F; }
+  .sp.tag-ai   .visual { background: linear-gradient(135deg, #D9F0E1 0%, #B6E0C4 100%); border-color: #74B98D; }
+  .sp.tag-3d   .visual { background: linear-gradient(135deg, #E6DEF7 0%, #C9BBED 100%); border-color: #9484CF; }
+  .sp.tag-game .visual { background: linear-gradient(135deg, #F5E0FF 0%, #E3B8FF 100%); border-color: #C07AE0; }
+  .sp .visual .deco {
+    position:absolute; right:-40px; top:-40px;
+    width:200px; height:200px; border-radius:50%;
+    background: rgba(255,255,255,0.55);
+  }
+  .sp .visual .deco2 {
+    position:absolute; left:-30px; bottom:-30px;
+    width:140px; height:140px; border-radius:50%;
+    background: rgba(255,255,255,0.45);
+  }
+  .sp .visual .icon {
+    position:relative; z-index:1;
+    width:300px; height:300px;
+    color: var(--accent);
+  }
+  .sp.tag-code .visual .icon { color: #8E5F00; }
+  .sp.tag-ai   .visual .icon { color: #1B6A3C; }
+  .sp.tag-3d   .visual .icon { color: var(--purple); }
+  .sp.tag-game .visual .icon { color: #6A1A8A; }
+  .sp .visual .icon svg { width:100%; height:100%; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .sp .visual .word {
+    position:relative; z-index:1;
+    margin-top:20px;
+    font-family:'Lora', Georgia, serif;
+    font-size:42px; font-weight:700; color:var(--ink);
+    line-height:1.1;
+  }
+  .sp .visual .word small {
+    display:block; margin-top:10px;
+    font-family:'Inter', sans-serif;
+    font-size:18px; font-weight:500;
+    letter-spacing:.18em; text-transform:uppercase;
+    color: var(--accent);
+  }
+  .sp.tag-code .visual .word small { color: #8E5F00; }
+  .sp.tag-ai   .visual .word small { color: #1B6A3C; }
+  .sp.tag-3d   .visual .word small { color: var(--purple); }
+  .sp.tag-game .visual .word small { color: #6A1A8A; }
+
+  .sp .info { display:flex; flex-direction:column; gap:24px; }
+  .sp .info .block {
+    background: var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:32px 36px;
+    flex:1;
+  }
+  .sp .info .block.concept {
+    background:#fff;
+    border:1px solid var(--border);
+    border-left:8px solid var(--accent);
+  }
+  .sp.tag-code .info .block.concept { border-left-color: #B58800; }
+  .sp.tag-ai   .info .block.concept { border-left-color: #21864B; }
+  .sp.tag-3d   .info .block.concept { border-left-color: var(--purple); }
+  .sp.tag-game .info .block.concept { border-left-color: #8B2BAD; }
+
+  .sp .info .block .label {
+    font-size:15px; letter-spacing:.26em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .sp.tag-code .info .block .label { color: #8E5F00; }
+  .sp.tag-ai   .info .block .label { color: #1B6A3C; }
+  .sp.tag-3d   .info .block .label { color: var(--purple); }
+  .sp.tag-game .info .block .label { color: #8B2BAD; }
+  .sp .info .block .label::before {
+    content:""; width:10px; height:10px; border-radius:50%;
+    background: currentColor; display:inline-block;
+  }
+  .sp .info .block p { margin:0; font-size:22px; line-height:1.45; color:var(--ink); }
+  .sp .info .block ul {
+    list-style:none; padding:0; margin:0;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .sp .info .block li {
+    font-size:22px; line-height:1.35; color:var(--ink);
+    padding-left:28px; position:relative;
+  }
+  .sp .info .block li::before {
+    content:""; position:absolute; left:0; top:11px;
+    width:12px; height:12px; border-radius:50%;
+    background:var(--accent);
+  }
+  .sp.tag-code .info .block li::before { background:#B58800; }
+  .sp.tag-ai   .info .block li::before { background:#21864B; }
+  .sp.tag-3d   .info .block li::before { background:var(--purple); }
+  .sp.tag-game .info .block li::before { background:#8B2BAD; }
+
+  /* ============== Finale ============== */
+  .sf { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 96px; }
+  .sf .eyebrow { font-size:22px; letter-spacing:.32em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  .sf h1 {
+    font-family:'Lora', Georgia, serif;
+    font-size:140px; font-weight:700; color:var(--ink);
+    margin:20px 0 0; letter-spacing:-1.5px; line-height:1;
+    text-align:center; white-space:nowrap;
+  }
+  .sf .underline { width:180px; height:6px; background:var(--accent); margin:32px 0; }
+  .sf .vals {
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:28px;
+    width:90%; max-width:1600px; margin-top:24px;
+  }
+  .sf .val {
+    text-align:center;
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:36px 22px;
+    display:flex; flex-direction:column; gap:14px; align-items:center;
+  }
+  .sf .val .ring {
+    width:88px; height:88px; border-radius:50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sf .val.code  .ring { background:#FFF1C7; color:#8E5F00; }
+  .sf .val.ai    .ring { background:#D9F0E1; color:#1B6A3C; }
+  .sf .val.three .ring { background:var(--purple-soft); color:var(--purple); }
+  .sf .val.game  .ring { background:#F5E0FF; color:#6A1A8A; }
+  .sf .val .ring svg { width:44px; height:44px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .sf .val h3 { margin:0; font-family:'Lora', Georgia, serif; font-size:26px; color:var(--ink); font-weight:700; }
+  .sf .closer {
+    margin-top:48px; font-size:24px; color:var(--ink-soft);
+    text-align:center; max-width:1200px; line-height:1.4;
+  }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- SLIDE 1 — Cover -->
+  <section class="s1" data-screen-label="01 Cover">
+    <div class="left">
+      <h1>Grade 6 AI<br/><span class="ink">and Robotics</span></h1>
+      <div class="subtitle">Program by Join Botics</div>
+      <div class="tagline">Building Smart Systems Through Robotics, AI &amp; Innovation</div>
+      <div class="pillrow">
+        <span>Robotics</span><span>Block Coding</span><span>AI</span><span>3D Design</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="robot r1" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><line x1="30" y1="6" x2="30" y2="14"/><circle cx="30" cy="5" r="2.5" fill="currentColor"/><rect x="12" y="14" width="36" height="30" rx="5"/><circle cx="22" cy="26" r="3" fill="currentColor"/><circle cx="38" cy="26" r="3" fill="currentColor"/><rect x="22" y="34" width="16" height="4" rx="2"/><rect x="8" y="22" width="4" height="10" rx="2"/><rect x="48" y="22" width="4" height="10" rx="2"/><rect x="18" y="46" width="8" height="8" rx="2"/><rect x="34" y="46" width="8" height="8" rx="2"/></svg>
+      </div>
+      <div class="robot r2" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><rect x="6" y="14" width="48" height="32" rx="3"/><polyline points="20,24 14,30 20,36"/><polyline points="34,24 40,30 34,36"/><line x1="32" y1="20" x2="26" y2="40"/></svg>
+      </div>
+      <div class="card">
+        <div class="label">AI &amp; Robotics</div>
+        <div class="grade">Grade 6</div>
+        <div class="pill">18 Projects · Year-long</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 — Program Overview -->
+  <section class="s2" data-screen-label="02 Program Overview">
+    <div class="topbar"><h2>Program Overview</h2><div class="badge">What's inside</div></div>
+    <div class="body">
+      <div class="grid">
+        <div class="ic">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="10" rx="2"/><line x1="8" y1="4" x2="8" y2="8"/><line x1="16" y1="4" x2="16" y2="8"/><circle cx="9" cy="13" r="1.5" fill="currentColor"/><circle cx="15" cy="13" r="1.5" fill="currentColor"/></svg></div>
+          <h3>Robotics &amp; Engineering</h3>
+          <p>Build mechanical machines, walkers, and motion systems.</p>
+        </div>
+        <div class="ic">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="4"/><circle cx="9" cy="12" r="1.5" fill="currentColor"/><circle cx="17" cy="12" r="3"/><circle cx="17" cy="12" r="1" fill="currentColor"/></svg></div>
+          <h3>Automation Systems</h3>
+          <p>Design robots that sense, decide, and act.</p>
+        </div>
+        <div class="ic tag-code">
+          <div class="icon"><svg viewBox="0 0 24 24"><polyline points="8,8 4,12 8,16"/><polyline points="16,8 20,12 16,16"/><line x1="14" y1="6" x2="10" y2="18"/></svg></div>
+          <h3>Block Coding</h3>
+          <p>Algorithms, variables, loops, and conditionals.</p>
+        </div>
+        <div class="ic tag-ai">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 11a3 3 0 0 1 6 0v2a3 3 0 0 1-6 0z"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/></svg></div>
+          <h3>Artificial Intelligence</h3>
+          <p>Face filters and object detection using AI-Z Bot.</p>
+        </div>
+        <div class="ic tag-3d">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v10l-8 4-8-4V7z"/><line x1="4" y1="7" x2="12" y2="11"/><line x1="20" y1="7" x2="12" y2="11"/><line x1="12" y1="11" x2="12" y2="21"/></svg></div>
+          <h3>3D Designing</h3>
+          <p>Model, refine, and export 3D digital designs.</p>
+        </div>
+        <div class="ic tag-game">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="3"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="5" y1="14" x2="9" y2="14"/><circle cx="17" cy="13" r="1.5" fill="currentColor"/><circle cx="15" cy="16" r="1" fill="currentColor"/></svg></div>
+          <h3>Game Development</h3>
+          <p>Create interactive games with block coding logic.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">02 / 23</div>
+  </section>
+
+  <!-- SLIDE 3 — Core Learning Areas -->
+  <section class="s3" data-screen-label="03 Core Learning Areas">
+    <div class="topbar"><h2>Core Learning Areas</h2><div class="badge">Six skills</div></div>
+    <div class="body">
+      <div class="grid">
+        <div class="tile">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="9" width="16" height="6" rx="2"/><circle cx="8" cy="17" r="3"/><circle cx="16" cy="17" r="3"/><line x1="8" y1="9" x2="8" y2="6"/></svg></div>
+          <h3>Robotics &amp; Motion</h3>
+          <p>Walking, launching, lifting, and pushing mechanisms.</p>
+        </div>
+        <div class="tile">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="4"/><circle cx="9" cy="12" r="1.5" fill="currentColor"/><circle cx="17" cy="12" r="3"/></svg></div>
+          <h3>Mechanical Engineering</h3>
+          <p>Gears, linkages, springs, and force systems.</p>
+        </div>
+        <div class="tile tag-code">
+          <div class="icon"><svg viewBox="0 0 24 24"><polyline points="8,8 4,12 8,16"/><polyline points="16,8 20,12 16,16"/><line x1="14" y1="6" x2="10" y2="18"/></svg></div>
+          <h3>Block Coding &amp; Logic</h3>
+          <p>Algorithms, variables, loops, and conditionals.</p>
+        </div>
+        <div class="tile tag-ai">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="14" rx="2"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="14" cy="12" r="1.5" fill="currentColor"/><line x1="12" y1="3" x2="12" y2="6"/></svg></div>
+          <h3>AI &amp; Computer Vision</h3>
+          <p>Face filters, object detection, and AI-Z Bot.</p>
+        </div>
+        <div class="tile tag-game">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="12" rx="3"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="5" y1="14" x2="9" y2="14"/><circle cx="17" cy="13" r="1.5" fill="currentColor"/></svg></div>
+          <h3>Game Development</h3>
+          <p>Interactive games with events, scoring, and UI.</p>
+        </div>
+        <div class="tile tag-3d">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v10l-8 4-8-4V7z"/><line x1="4" y1="7" x2="12" y2="11"/><line x1="20" y1="7" x2="12" y2="11"/><line x1="12" y1="11" x2="12" y2="21"/></svg></div>
+          <h3>3D Designing &amp; Printing</h3>
+          <p>Model, export, and prepare designs for print.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">03 / 23</div>
+  </section>
+
+  <!-- SLIDE 4 — Learning Experience -->
+  <section class="s4" data-screen-label="04 Learning Experience">
+    <div class="topbar"><h2>The Learning Experience</h2><div class="badge">Six steps</div></div>
+    <div class="body">
+      <div class="intro">From first build to original invention — every student moves through the same six stages across the year.</div>
+      <div class="path">
+        <div class="step">
+          <div class="ring"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M8 8V5a4 4 0 0 1 8 0v3"/></svg></div>
+          <div class="ix">STEP 01</div><h3>Build</h3>
+          <p>Assemble mechanical &amp; electronic models.</p>
+        </div>
+        <div class="step">
+          <div class="ring"><svg viewBox="0 0 24 24"><polyline points="8,8 4,12 8,16"/><polyline points="16,8 20,12 16,16"/><line x1="14" y1="6" x2="10" y2="18"/></svg></div>
+          <div class="ix">STEP 02</div><h3>Program</h3>
+          <p>Write block-based logic and scripts.</p>
+        </div>
+        <div class="step">
+          <div class="ring"><svg viewBox="0 0 24 24"><path d="M9 3h6l-1 5h-4z"/><path d="M9 8l-4 11a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-4-11"/></svg></div>
+          <div class="ix">STEP 03</div><h3>Automate</h3>
+          <p>Make systems respond without manual input.</p>
+        </div>
+        <div class="step">
+          <div class="ring"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v10l-8 4-8-4V7z"/><line x1="4" y1="7" x2="12" y2="11"/><line x1="20" y1="7" x2="12" y2="11"/><line x1="12" y1="11" x2="12" y2="21"/></svg></div>
+          <div class="ix">STEP 04</div><h3>Design</h3>
+          <p>Sketch &amp; model in 3D space.</p>
+        </div>
+        <div class="step">
+          <div class="ring"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 11a3 3 0 0 1 6 0v2a3 3 0 0 1-6 0z"/><line x1="12" y1="3" x2="12" y2="6"/></svg></div>
+          <div class="ix">STEP 05</div><h3>Analyse</h3>
+          <p>Test AI models and read data outputs.</p>
+        </div>
+        <div class="step">
+          <div class="ring"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 4 10c-1 1-1.5 2-1.5 3h-5c0-1-.5-2-1.5-3a6 6 0 0 1 4-10z"/></svg></div>
+          <div class="ix">STEP 06</div><h3>Innovate</h3>
+          <p>Combine ideas into something new.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">04 / 23</div>
+  </section>
+
+  <!-- ============ ROBOTICS ============ -->
+
+  <!-- SLIDE 5 — Bigfoot -->
+  <section class="sp" data-screen-label="05 Bigfoot">
+    <div class="topbar"><h2>Bigfoot</h2><div class="badge">Robotics · Project 01</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="20" y="6" width="20" height="16" rx="4"/><circle cx="25" cy="13" r="2" fill="currentColor"/><circle cx="35" cy="13" r="2" fill="currentColor"/><line x1="30" y1="22" x2="30" y2="30"/><rect x="16" y="30" width="28" height="12" rx="3"/><line x1="18" y1="42" x2="14" y2="56"/><line x1="42" y1="42" x2="46" y2="56"/><line x1="22" y1="42" x2="20" y2="56"/><line x1="38" y1="42" x2="40" y2="56"/><ellipse cx="14" cy="57" rx="5" ry="2"/><ellipse cx="46" cy="57" rx="5" ry="2"/></svg></div>
+        <div class="word">Bigfoot<small>Walking linkages</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>A walking robot inspired by human movement and balance using mechanical linkages.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Mechanical linkages</li><li>Walking mechanisms</li><li>Stability and coordination</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in humanoid robots, prosthetic limbs, and robotic mobility systems.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">05 / 23</div>
+  </section>
+
+  <!-- SLIDE 6 — Gyro Launcher -->
+  <section class="sp" data-screen-label="06 Gyro Launcher">
+    <div class="topbar"><h2>Gyro Launcher</h2><div class="badge">Robotics · Project 02</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="18" fill="none"/><circle cx="30" cy="30" r="10" fill="none"/><circle cx="30" cy="30" r="4" fill="currentColor"/><ellipse cx="30" cy="30" rx="18" ry="6" fill="none" transform="rotate(30 30 30)"/><ellipse cx="30" cy="30" rx="18" ry="6" fill="none" transform="rotate(60 30 30)"/><line x1="30" y1="4" x2="30" y2="12"/><polygon points="28,4 32,4 30,8"/><line x1="30" y1="48" x2="30" y2="56"/></svg></div>
+        <div class="word">Gyro Launcher<small>Angular momentum</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>A spinning launcher demonstrating gyroscopic motion and stored rotational energy.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Angular momentum</li><li>Energy storage and release</li><li>Rotational stability</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in drones, navigation systems, and aerospace engineering.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">06 / 23</div>
+  </section>
+
+  <!-- SLIDE 7 — Lifting Mechanism Robot -->
+  <section class="sp" data-screen-label="07 Lifting Mechanism Robot">
+    <div class="topbar"><h2>Lifting Mechanism Robot</h2><div class="badge">Robotics · Project 03</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><line x1="10" y1="54" x2="50" y2="54"/><rect x="22" y="44" width="16" height="10" rx="2"/><line x1="30" y1="44" x2="30" y2="18"/><line x1="10" y1="54" x2="10" y2="18"/><line x1="10" y1="18" x2="50" y2="18"/><line x1="30" y1="18" x2="50" y2="30"/><line x1="50" y1="18" x2="50" y2="54"/><circle cx="30" cy="18" r="4"/><rect x="36" y="8" width="18" height="10" rx="2"/><line x1="48" y1="8" x2="48" y2="4"/><circle cx="36" cy="12" r="1.5" fill="currentColor"/></svg></div>
+        <div class="word">Lifting Robot<small>Gears &amp; levers</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>A robotic lifting mechanism using gears and levers to raise and lower loads.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Gear systems</li><li>Mechanical lifting</li><li>Load distribution</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in cranes, elevators, and industrial robots.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">07 / 23</div>
+  </section>
+
+  <!-- SLIDE 8 — Jumping Mechanism -->
+  <section class="sp" data-screen-label="08 Jumping Mechanism">
+    <div class="topbar"><h2>Jumping Mechanism</h2><div class="badge">Robotics · Project 04</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="18" y="10" width="24" height="20" rx="4"/><circle cx="25" cy="18" r="2" fill="currentColor"/><circle cx="35" cy="18" r="2" fill="currentColor"/><line x1="22" y1="30" x2="18" y2="46"/><line x1="38" y1="30" x2="42" y2="46"/><line x1="14" y1="46" x2="26" y2="46"/><line x1="34" y1="46" x2="46" y2="46"/><path d="M18 46 Q16 54 22 56"/><path d="M42 46 Q44 54 38 56"/><path d="M24 8 Q30 2 36 8"/><polygon points="28,2 32,2 30,6"/></svg></div>
+        <div class="word">Jump Robot<small>Spring-based motion</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>A robot designed to mimic jumping using spring-based and elastic energy systems.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Force and motion</li><li>Energy transfer</li><li>Mechanical movement</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in rescue robots, military robotics, and mobility research.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">08 / 23</div>
+  </section>
+
+  <!-- SLIDE 9 — Surface Pushing Robot -->
+  <section class="sp" data-screen-label="09 Surface Pushing Robot">
+    <div class="topbar"><h2>Surface Pushing Robot</h2><div class="badge">Robotics · Project 05</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="12" y="22" width="28" height="16" rx="3"/><circle cx="18" cy="44" r="6"/><circle cx="34" cy="44" r="6"/><circle cx="18" cy="44" r="2" fill="currentColor"/><circle cx="34" cy="44" r="2" fill="currentColor"/><rect x="4" y="26" width="12" height="8" rx="2"/><line x1="4" y1="30" x2="12" y2="30"/><rect x="40" y="20" width="16" height="10" rx="2" fill="none"/><line x1="40" y1="24" x2="40" y2="22"/><line x1="56" y1="24" x2="56" y2="22"/><rect x="44" y="16" width="8" height="6" rx="1" fill="none"/></svg></div>
+        <div class="word">Pusher Robot<small>Controlled force</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>A wheeled robot that applies controlled force to push objects across surfaces.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Surface movement</li><li>Force application</li><li>Controlled robotic motion</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in warehouse automation, logistics robots, and industrial systems.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">09 / 23</div>
+  </section>
+
+  <!-- ============ 3D DESIGNING ============ -->
+
+  <!-- SLIDE 10 — Introduction to 3D Models -->
+  <section class="sp tag-3d" data-screen-label="10 Introduction to 3D Models">
+    <div class="topbar"><h2>Introduction to 3D Models</h2><div class="badge three">3D Design · Project 06</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><path d="M16 18 L30 12 L44 18 L44 36 L30 42 L16 36 Z"/><line x1="16" y1="18" x2="30" y2="24"/><line x1="44" y1="18" x2="30" y2="24"/><line x1="30" y1="24" x2="30" y2="42"/><rect x="6" y="42" width="48" height="10" rx="2"/></svg></div>
+        <div class="word">3D Models<small>Digital object building</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Learning the fundamentals of digital 3D designing — shaping, resizing, and placing objects.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Shape resizing</li><li>Rotation and positioning</li><li>Digital object manipulation</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in architecture, engineering, and industrial product design.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">10 / 23</div>
+  </section>
+
+  <!-- SLIDE 11 — Alignment & Grouping -->
+  <section class="sp tag-3d" data-screen-label="11 Alignment and Grouping">
+    <div class="topbar"><h2>Alignment &amp; Grouping in 3D Models</h2><div class="badge three">3D Design · Project 07</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="6" y="14" width="16" height="16" rx="2"/><rect x="28" y="18" width="14" height="12" rx="2"/><rect x="8" y="38" width="10" height="10" rx="2"/><rect x="26" y="36" width="18" height="12" rx="2"/><line x1="4" y1="22" x2="56" y2="22"/><line x1="4" y1="44" x2="56" y2="44"/><line x1="4" y1="10" x2="4" y2="56"/><line x1="56" y1="10" x2="56" y2="56"/></svg></div>
+        <div class="word">3D Models<small>Align &amp; group</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Using alignment and grouping tools to precisely organise multiple 3D model components.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Precision placement</li><li>Grouping objects</li><li>Structural organisation</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in manufacturing, industrial prototyping, and CAD workflows.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">11 / 23</div>
+  </section>
+
+  <!-- SLIDE 12 — Name Tag Design -->
+  <section class="sp tag-3d" data-screen-label="12 Name Tag Design">
+    <div class="topbar"><h2>Name Tag Design</h2><div class="badge three">3D Design · Project 08</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="8" y="16" width="44" height="28" rx="4"/><circle cx="30" cy="10" r="3"/><line x1="30" y1="13" x2="30" y2="16"/><line x1="14" y1="28" x2="46" y2="28"/><line x1="14" y1="34" x2="36" y2="34"/><rect x="14" y="20" width="6" height="6" rx="1" fill="none"/><line x1="14" y1="22" x2="20" y2="22"/><line x1="14" y1="24" x2="20" y2="24"/></svg></div>
+        <div class="word">Name Tag<small>Personalised 3D</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Designing a personalised 3D name tag using text and shape tools.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Text integration in 3D</li><li>Engraving concepts</li><li>Creative customisation</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in branding, product labelling, and personalisation industries.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">12 / 23</div>
+  </section>
+
+  <!-- SLIDE 13 — Finalizing Digital Models -->
+  <section class="sp tag-3d" data-screen-label="13 Finalizing Digital Models">
+    <div class="topbar"><h2>Finalizing Digital Models</h2><div class="badge three">3D Design · Project 09</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><path d="M14 18 L30 10 L46 18 L46 38 L30 46 L14 38 Z"/><line x1="14" y1="18" x2="30" y2="26"/><line x1="46" y1="18" x2="30" y2="26"/><line x1="30" y1="26" x2="30" y2="46"/><circle cx="46" cy="44" r="6"/><line x1="46" y1="40" x2="46" y2="44"/><line x1="46" y1="44" x2="50" y2="44"/></svg></div>
+        <div class="word">3D Models<small>Refine &amp; optimise</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Reviewing and optimising a digital 3D model to prepare it for production.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Model refinement</li><li>Design optimisation</li><li>Creative iteration</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in engineering and professional product design workflows.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">13 / 23</div>
+  </section>
+
+  <!-- SLIDE 14 — Exporting & Printing Workflow -->
+  <section class="sp tag-3d" data-screen-label="14 Exporting and Printing Workflow">
+    <div class="topbar"><h2>Exporting &amp; Printing Workflow</h2><div class="badge three">3D Design · Project 10</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="10" y="30" width="40" height="22" rx="3"/><rect x="20" y="24" width="20" height="10" rx="2"/><path d="M24 8 L30 4 L36 8 L36 24 L24 24 Z"/><line x1="16" y1="38" x2="44" y2="38"/><rect x="24" y="40" width="12" height="7" rx="1" fill="none"/><line x1="24" y1="43" x2="36" y2="43"/><line x1="38" y1="10" x2="52" y2="10"/><polygon points="48,6 56,10 48,14"/></svg></div>
+        <div class="word">Print Ready<small>Export &amp; produce</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Preparing and exporting digital designs through the full pipeline for physical 3D printing.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>File exporting</li><li>Print preparation</li><li>Production workflow</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in rapid prototyping and manufacturing industries.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">14 / 23</div>
+  </section>
+
+  <!-- ============ BLOCK CODING ============ -->
+
+  <!-- SLIDE 15 — Introduction to Block Coding -->
+  <section class="sp tag-code" data-screen-label="15 Introduction to Block Coding">
+    <div class="topbar"><h2>Introduction to Block Coding</h2><div class="badge coding">Coding · Project 11</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="4" y="10" width="24" height="6" rx="2"/><rect x="6" y="20" width="22" height="6" rx="2"/><rect x="8" y="30" width="20" height="6" rx="2"/><rect x="6" y="40" width="22" height="6" rx="2"/><circle cx="44" cy="22" r="10"/><circle cx="40" cy="20" r="1.5" fill="currentColor"/><circle cx="48" cy="20" r="1.5" fill="currentColor"/><path d="M40 26 q4 3 8 0"/><rect x="36" y="36" width="16" height="14" rx="2"/><line x1="44" y1="32" x2="44" y2="36"/></svg></div>
+        <div class="word">Block Coding<small>Logic &amp; sequences</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Introduction to coding logic and programming structures using drag-and-drop blocks.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Scripts and sequences</li><li>Coding logic</li><li>Program flow</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Foundation for software development, app design, and AI programming.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">15 / 23</div>
+  </section>
+
+  <!-- SLIDE 16 — Algorithms with Block Coding -->
+  <section class="sp tag-code" data-screen-label="16 Algorithms with Block Coding">
+    <div class="topbar"><h2>Algorithms with Block Coding</h2><div class="badge coding">Coding · Project 12</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="16" y="6" width="28" height="10" rx="2"/><line x1="30" y1="16" x2="30" y2="24"/><polygon points="20,24 40,24 36,34 24,34"/><line x1="24" y1="34" x2="18" y2="44"/><line x1="36" y1="34" x2="42" y2="44"/><rect x="10" y="44" width="16" height="10" rx="2"/><rect x="34" y="44" width="16" height="10" rx="2"/></svg></div>
+        <div class="word">Algorithms<small>Step-by-step logic</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Understanding algorithms as step-by-step instructions that solve problems through visual coding.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Logical thinking</li><li>Step sequencing</li><li>Problem solving</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in software engineering, navigation apps, and automation systems.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">16 / 23</div>
+  </section>
+
+  <!-- SLIDE 17 — Variables in Coding -->
+  <section class="sp tag-code" data-screen-label="17 Variables in Coding">
+    <div class="topbar"><h2>Variables in Block Coding</h2><div class="badge coding">Coding · Project 13</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="6" y="10" width="20" height="10" rx="2"/><rect x="6" y="28" width="20" height="10" rx="2"/><rect x="6" y="46" width="20" height="10" rx="2"/><line x1="26" y1="15" x2="36" y2="15"/><line x1="26" y1="33" x2="36" y2="33"/><line x1="26" y1="51" x2="36" y2="51"/><rect x="36" y="10" width="18" height="10" rx="2"/><rect x="36" y="28" width="18" height="10" rx="2"/><rect x="36" y="46" width="18" height="10" rx="2"/><text x="44" y="19" text-anchor="middle" font-family="Inter" font-size="7" fill="currentColor">42</text><text x="44" y="37" text-anchor="middle" font-family="Inter" font-size="7" fill="currentColor">Hi!</text><text x="44" y="55" text-anchor="middle" font-family="Inter" font-size="7" fill="currentColor">✓</text></svg></div>
+        <div class="word">Variables<small>Store &amp; use data</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Using variables to store, update, and retrieve information inside programs.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Data storage</li><li>Variable manipulation</li><li>Interactive programming</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in apps, websites, and AI systems to track and process information.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">17 / 23</div>
+  </section>
+
+  <!-- SLIDE 18 — Control with Conditionals -->
+  <section class="sp tag-code" data-screen-label="18 Control with Conditionals">
+    <div class="topbar"><h2>Control with Conditionals</h2><div class="badge coding">Coding · Project 14</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><polygon points="30,8 50,22 30,36 10,22"/><text x="30" y="25" text-anchor="middle" font-family="Inter" font-size="6" fill="currentColor">if?</text><line x1="14" y1="30" x2="14" y2="44"/><line x1="14" y1="44" x2="22" y2="44"/><rect x="6" y="44" width="14" height="10" rx="2"/><text x="13" y="51" text-anchor="middle" font-family="Inter" font-size="5" fill="currentColor">yes</text><line x1="46" y1="30" x2="46" y2="44"/><rect x="40" y="44" width="14" height="10" rx="2"/><text x="47" y="51" text-anchor="middle" font-family="Inter" font-size="5" fill="currentColor">no</text></svg></div>
+        <div class="word">If… Else<small>Smart decisions</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Building smart programs that make decisions using if-else conditional logic.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>If-else conditions</li><li>Decision making</li><li>Program control flow</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in robotics, automation systems, and intelligent software applications.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">18 / 23</div>
+  </section>
+
+  <!-- SLIDE 19 — Loops with Block Coding -->
+  <section class="sp tag-code" data-screen-label="19 Loops with Block Coding">
+    <div class="topbar"><h2>Loops with Block Coding</h2><div class="badge coding">Coding · Project 15</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><path d="M16 30 A14 14 0 1 1 30 44" fill="none" stroke-width="4"/><polygon points="26,40 30,48 34,40"/><rect x="22" y="14" width="16" height="8" rx="2"/><line x1="30" y1="22" x2="30" y2="26"/><rect x="22" y="26" width="16" height="8" rx="2"/><line x1="30" y1="34" x2="30" y2="38" stroke-dasharray="2 2"/></svg></div>
+        <div class="word">Loops<small>Repeat &amp; automate</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Using loops to automate repeated actions and reduce code in programs.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Repeat loops</li><li>Forever loops</li><li>Code optimisation</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in automation systems, animation engines, and game programming.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">19 / 23</div>
+  </section>
+
+  <!-- ============ GAME DEVELOPMENT ============ -->
+
+  <!-- SLIDE 20 — Interactive Game Design -->
+  <section class="sp tag-game" data-screen-label="20 Interactive Game Design">
+    <div class="topbar"><h2>Interactive Game Design</h2><div class="badge coding">Game Dev · Project 16</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="6" y="16" width="48" height="32" rx="6"/><line x1="16" y1="26" x2="16" y2="34"/><line x1="12" y1="30" x2="20" y2="30"/><circle cx="38" cy="28" r="3" fill="currentColor"/><circle cx="44" cy="34" r="2" fill="currentColor"/><circle cx="32" cy="34" r="2" fill="currentColor"/><rect x="22" y="44" width="16" height="6" rx="2"/><line x1="26" y1="42" x2="26" y2="44"/><line x1="34" y1="42" x2="34" y2="44"/></svg></div>
+        <div class="word">Game Design<small>Build &amp; play</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Creating interactive games combining sprites, events, scoring, and player controls.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Game mechanics</li><li>User interaction</li><li>Event systems</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in video game development, educational apps, and interactive simulations.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">20 / 23</div>
+  </section>
+
+  <!-- ============ AI ============ -->
+
+  <!-- SLIDE 21 — Face Filters with AI-Z Bot -->
+  <section class="sp tag-ai" data-screen-label="21 Face Filters with AI-Z Bot">
+    <div class="topbar"><h2>Face Filters with AI-Z Bot</h2><div class="badge ai">AI · Project 17</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="28" r="14"/><circle cx="24" cy="24" r="1.5" fill="currentColor"/><circle cx="36" cy="24" r="1.5" fill="currentColor"/><path d="M24 33 q6 4 12 0"/><rect x="16" y="12" width="28" height="28" rx="2" fill="none"/><line x1="16" y1="18" x2="22" y2="18"/><line x1="16" y1="18" x2="16" y2="12"/><line x1="44" y1="18" x2="38" y2="18"/><line x1="44" y1="18" x2="44" y2="12"/><line x1="16" y1="34" x2="22" y2="34"/><line x1="16" y1="34" x2="16" y2="40"/><line x1="44" y1="34" x2="38" y2="34"/><line x1="44" y1="34" x2="44" y2="40"/><path d="M20 16 Q14 10 10 16"/><path d="M40 16 Q46 10 50 16"/></svg></div>
+        <div class="word">AI-Z Bot<small>Face filter AI</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Using AI-Z Bot to apply real-time smart face filters and augmented reality effects.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Face tracking</li><li>AI-based filters</li><li>Computer vision basics</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in social media apps, AR applications, and entertainment technology.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">21 / 23</div>
+  </section>
+
+  <!-- SLIDE 22 — Object Detection with AI-Z Bot -->
+  <section class="sp tag-ai" data-screen-label="22 Object Detection with AI-Z Bot">
+    <div class="topbar"><h2>Object Detection with AI-Z Bot</h2><div class="badge ai">AI · Project 18</div></div>
+    <div class="body">
+      <div class="visual"><div class="deco"></div><div class="deco2"></div>
+        <div class="icon"><svg viewBox="0 0 60 60"><rect x="8" y="8" width="44" height="44" rx="4" fill="none"/><rect x="18" y="18" width="14" height="14" rx="2" fill="none"/><line x1="8" y1="16" x2="16" y2="16"/><line x1="8" y1="16" x2="8" y2="8"/><line x1="52" y1="16" x2="44" y2="16"/><line x1="52" y1="16" x2="52" y2="8"/><line x1="8" y1="44" x2="16" y2="44"/><line x1="8" y1="44" x2="8" y2="52"/><line x1="52" y1="44" x2="44" y2="44"/><line x1="52" y1="44" x2="52" y2="52"/><circle cx="42" cy="38" r="6" fill="none"/><line x1="46" y1="42" x2="52" y2="48"/></svg></div>
+        <div class="word">AI-Z Bot<small>Object detection AI</small></div>
+      </div>
+      <div class="info">
+        <div class="block concept"><div class="label">Concept</div><p>Training AI-Z Bot to identify and classify real-world objects through the camera.</p></div>
+        <div class="block"><div class="label">What Students Learn</div><ul><li>Computer vision</li><li>Object recognition</li><li>AI-based analysis</li></ul></div>
+        <div class="block"><div class="label">Real-World Use</div><p>Used in self-driving cars, security cameras, and smart retail systems.</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div><div class="slide-num">22 / 23</div>
+  </section>
+
+  <!-- SLIDE 23 — Future Innovators -->
+  <section class="sf" data-screen-label="23 Future Innovators">
+    <div class="eyebrow">Grand Finale</div>
+    <h1>Future Innovators</h1>
+    <div class="underline"></div>
+    <div class="vals">
+      <div class="val">
+        <div class="ring"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="10" rx="2"/><line x1="8" y1="4" x2="8" y2="8"/><line x1="16" y1="4" x2="16" y2="8"/><circle cx="9" cy="13" r="1.5" fill="currentColor"/><circle cx="15" cy="13" r="1.5" fill="currentColor"/></svg></div>
+        <h3>Robotics</h3>
+      </div>
+      <div class="val code">
+        <div class="ring"><svg viewBox="0 0 24 24"><polyline points="8,8 4,12 8,16"/><polyline points="16,8 20,12 16,16"/><line x1="14" y1="6" x2="10" y2="18"/></svg></div>
+        <h3>Block Coding</h3>
+      </div>
+      <div class="val ai">
+        <div class="ring"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 11a3 3 0 0 1 6 0v2a3 3 0 0 1-6 0z"/><line x1="12" y1="3" x2="12" y2="6"/></svg></div>
+        <h3>AI</h3>
+      </div>
+      <div class="val three">
+        <div class="ring"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v10l-8 4-8-4V7z"/><line x1="4" y1="7" x2="12" y2="11"/><line x1="20" y1="7" x2="12" y2="11"/><line x1="12" y1="11" x2="12" y2="21"/></svg></div>
+        <h3>3D Design</h3>
+      </div>
+      <div class="val">
+        <div class="ring"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 4 1 5.5L12 16l-5 2.3 1-5.5-4-4 5.5-.8z"/></svg></div>
+        <h3>Innovation</h3>
+      </div>
+    </div>
+    <div class="closer">Every Grade 6 student leaves with a portfolio of working projects across robotics, block coding, AI and 3D design — and the confidence to keep inventing.</div>
+  </section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+</body>
+</html>
