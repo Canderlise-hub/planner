@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Grade 1 AI &amp; Robotics — White &amp; Blue Theme Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Blue & white palette (mirrors the PPTX swap) */
+    --bg:          #FFFFFF;
+    --bg-tint:     #F4F8FD;
+    --card:        #F2F6FB;
+    --card-2:      #E8EFF8;
+    --border:      #D6E3F2;
+    --ink:         #0F2545;
+    --ink-soft:    #6E89B0;
+    --accent:      #1E5FBF;
+    --accent-2:    #2D8FE3;
+    --accent-soft: #DCEAF7;
+    --accent-mid:  #A8C8EC;
+    --header-strip:#0F2545;
+  }
+  html, body { margin:0; padding:0; background:#0a0f1a; color:var(--ink); font-family:'Inter', system-ui, sans-serif; }
+
+  deck-stage { --slide-w: 1920; --slide-h: 1080; }
+  deck-stage > section {
+    width:1920px; height:1080px;
+    background: var(--bg);
+    color: var(--ink);
+    position:relative;
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+
+  /* ---- shared bits ---- */
+  .topbar {
+    position:absolute; left:0; right:0; top:0;
+    height:140px; background: var(--header-strip);
+    display:flex; align-items:center; padding:0 72px;
+    color:#fff; gap:32px;
+  }
+  .topbar h2 {
+    font-family:'Lora', Georgia, serif;
+    font-weight:700; font-size:40px; margin:0;
+    color:#fff; letter-spacing:.2px;
+    flex:1; min-width:0;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .topbar .badge {
+    flex-shrink:0;
+    font-size:18px; font-weight:500; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent-mid);
+  }
+  .slide-num {
+    position:absolute; bottom:32px; right:48px;
+    font-size:16px; color:var(--ink-soft); letter-spacing:.15em;
+  }
+  .footer-mark {
+    position:absolute; bottom:32px; left:72px;
+    font-size:16px; color:var(--ink-soft); letter-spacing:.15em; text-transform:uppercase;
+  }
+  .accent-dot {
+    width:14px; height:14px; border-radius:50%;
+    background:var(--accent); display:inline-block;
+    vertical-align:middle; margin-right:14px;
+  }
+
+  /* ============== SLIDE 1 — title ============== */
+  .s1 { display:flex; }
+  .s1 .left {
+    flex: 0 0 58%;
+    background:#fff;
+    padding:140px 90px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+  }
+  .s1 .left::before {
+    content:""; position:absolute; left:90px; top:140px; width:96px; height:6px;
+    background:var(--accent);
+  }
+  .s1 h1 {
+    font-family:'Lora', Georgia, serif;
+    font-size:148px; line-height:1.02; margin:0;
+    color:var(--accent); font-weight:700; letter-spacing:-1.5px;
+  }
+  .s1 h1 .ink { color:var(--ink); }
+  .s1 .subtitle {
+    margin-top:60px;
+    font-size:24px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ink-soft); font-weight:500;
+  }
+  .s1 .right {
+    flex:1;
+    background:var(--accent-soft);
+    padding:90px 80px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .s1 .right .card {
+    width:100%;
+    background:#fff;
+    border:3px solid var(--accent);
+    border-radius:24px;
+    padding:80px 64px;
+    text-align:center;
+    box-shadow: 0 24px 48px -28px rgba(15,37,69,0.35);
+  }
+  .s1 .right .label {
+    font-size:22px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--accent); font-weight:600;
+  }
+  .s1 .right .grade {
+    font-family:'Lora', Georgia, serif;
+    font-size:96px; font-weight:700; color:var(--ink); margin-top:24px;
+    line-height:1;
+  }
+  .s1 .right .pill {
+    display:inline-block; margin-top:48px;
+    padding:14px 28px; border-radius:999px;
+    background:var(--accent); color:#fff;
+    font-weight:600; letter-spacing:.15em; font-size:18px;
+  }
+
+  /* ============== SLIDE 2 — bullets ============== */
+  .s2 { padding-top:140px; }
+  .s2 .body { padding:64px 96px 0; max-width:1640px; }
+  .s2 ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:22px; }
+  .s2 li {
+    display:flex; gap:32px; align-items:center;
+    font-size:28px; color:var(--ink); line-height:1.3;
+    padding-bottom:22px; border-bottom:1px solid var(--border);
+  }
+  .s2 li:last-child { border-bottom:0; padding-bottom:0; }
+  .s2 .num {
+    flex:0 0 72px; height:72px;
+    border-radius:50%;
+    background:var(--accent-soft);
+    color:var(--accent); font-weight:700;
+    font-family:'Lora', Georgia, serif;
+    font-size:30px;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ============== SLIDE 3 — what they learn (grid) ============== */
+  .s3 { padding-top:140px; }
+  .s3 .body { padding:80px 96px 0; }
+  .s3 .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:36px; }
+  .s3 .tile {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:48px 44px;
+    display:flex; flex-direction:column; gap:18px;
+    min-height:280px;
+  }
+  .s3 .tile .head {
+    font-family:'Lora', Georgia, serif;
+    font-size:34px; font-weight:700; color:var(--accent);
+  }
+  .s3 .tile p { margin:0; font-size:22px; color:var(--ink); line-height:1.4; }
+  .s3 .tile .ix {
+    align-self:flex-start;
+    font-size:16px; letter-spacing:.2em; color:var(--ink-soft);
+  }
+
+  /* ============== SLIDE 4 — Journey overview with stats ============== */
+  .s4 { padding-top:140px; }
+  .s4 .body { display:grid; grid-template-columns: 1fr 1.4fr; gap:48px; padding:56px 96px 56px; height: calc(100% - 140px); box-sizing:border-box;}
+  .s4 .left {
+    background:var(--accent); color:#fff;
+    border-radius:24px; padding:56px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
+  }
+  .s4 .left .brand {
+    font-family:'Lora', Georgia, serif; font-size:64px; font-weight:700;
+    color:#fff;
+  }
+  .s4 .left .tag {
+    margin-top:18px; font-size:22px; color:var(--accent-mid); letter-spacing:.18em; text-transform:uppercase;
+  }
+  .s4 .left p {
+    margin-top:40px; font-size:22px; line-height:1.5; color:#fff; opacity:.94;
+  }
+  .s4 .right { display:flex; flex-direction:column; gap:32px; }
+  .s4 .stats { display:grid; grid-template-columns: repeat(2, 1fr); gap:28px; flex:1; }
+  .s4 .stat {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:20px; padding:36px 40px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .s4 .stat .n {
+    font-family:'Lora', Georgia, serif;
+    font-size:96px; font-weight:700; color:var(--accent); line-height:1;
+  }
+  .s4 .stat .l {
+    margin-top:14px; font-size:24px; color:var(--ink); letter-spacing:.04em;
+  }
+
+  /* ============== SLIDES 5–21 — project cards ============== */
+  .sp { padding-top:140px; }
+  .sp .body { padding:56px 96px 56px; display:grid; grid-template-columns: 1.05fr 1fr; gap:48px; height: calc(100% - 140px); box-sizing:border-box; }
+  .sp .lead {
+    background:var(--accent-soft);
+    border:1px solid var(--accent-mid);
+    border-radius:24px;
+    padding:56px;
+    display:flex; flex-direction:column; gap:24px;
+    position:relative;
+  }
+  .sp .lead .eyebrow {
+    font-size:18px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--accent); font-weight:600;
+  }
+  .sp .lead h3 {
+    font-family:'Lora', Georgia, serif;
+    margin:0; font-size:64px; line-height:1.05; color:var(--ink); font-weight:700;
+  }
+  .sp .lead p {
+    margin:0; font-size:24px; line-height:1.5; color:var(--ink);
+  }
+  .sp .lead .real {
+    margin-top:auto;
+    padding:28px; border-radius:16px; background:#fff;
+    border-left:6px solid var(--accent);
+    font-size:20px; line-height:1.5; color:var(--ink);
+  }
+  .sp .lead .real strong {
+    display:block; font-size:14px; letter-spacing:.24em; color:var(--accent);
+    margin-bottom:10px; text-transform:uppercase;
+  }
+  .sp .learn {
+    background:var(--card); border:1px solid var(--border); border-radius:24px;
+    padding:52px;
+    display:flex; flex-direction:column;
+  }
+  .sp .learn .ttl {
+    font-size:18px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; margin-bottom:24px;
+  }
+  .sp .learn h4 {
+    margin:0 0 32px; font-family:'Lora', Georgia, serif;
+    font-size:36px; color:var(--ink); font-weight:700;
+  }
+  .sp .learn ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:22px; }
+  .sp .learn li {
+    display:flex; gap:18px; align-items:flex-start;
+    font-size:22px; line-height:1.4; color:var(--ink);
+  }
+  .sp .learn li::before {
+    content:""; flex:0 0 14px; width:14px; height:14px; border-radius:50%;
+    background:var(--accent); margin-top:8px;
+  }
+  .sp .preview-art {
+    margin-top:auto; padding-top:32px;
+  }
+  .sp .preview-art .ph {
+    height:200px; border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--accent-mid);
+    background: linear-gradient(135deg, #DCEAF7 0%, #BFD9F2 100%);
+    position:relative;
+    display:flex; align-items:center; justify-content:flex-start;
+    padding-left:40px;
+  }
+  .sp .preview-art .ph .icon {
+    width:120px; height:120px;
+    color: var(--accent);
+    flex-shrink:0;
+  }
+  .sp .preview-art .ph .icon svg {
+    width:100%; height:100%;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sp .preview-art .ph .word {
+    margin-left:32px;
+    font-family:'Lora', Georgia, serif;
+    font-size:34px; font-weight:700;
+    color:var(--ink);
+    line-height:1.1;
+  }
+  .sp .preview-art .ph .word small {
+    display:block; margin-top:6px;
+    font-family:'Inter', sans-serif;
+    font-size:15px; font-weight:500;
+    letter-spacing:.16em; text-transform:uppercase;
+    color: var(--accent);
+  }
+  .sp .preview-art .ph .deco {
+    position:absolute; right:-30px; top:-30px;
+    width:160px; height:160px; border-radius:50%;
+    background: rgba(255,255,255,0.5);
+  }
+  .sp .preview-art .ph .deco2 {
+    position:absolute; right:30px; bottom:-40px;
+    width:90px; height:90px; border-radius:50%;
+    background: rgba(255,255,255,0.4);
+  }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- ============== SLIDE 1 — Title ============== -->
+  <section class="s1" data-screen-label="01 Title">
+    <div class="left">
+      <h1>Grade 1 AI<br/><span class="ink">and Robotics</span></h1>
+      <div class="subtitle">Program by Join Botics</div>
+    </div>
+    <div class="right">
+      <div class="card">
+        <div class="label">AI &amp; Robotics</div>
+        <div class="grade">Grade 1</div>
+        <div class="pill">32 Sessions · Year-long</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 2 — Curriculum ============== -->
+  <section class="s2" data-screen-label="02 Curriculum">
+    <div class="topbar"><h2>Key Details of the Curriculum Structure</h2><div class="badge">Overview</div></div>
+    <div class="body">
+      <ul>
+        <li><div class="num">1</div><div>32 engaging AI and Robotics sessions designed for Grade 1 students</div></li>
+        <li><div class="num">2</div><div>Weekly 40-minute classes for consistent and enjoyable learning</div></li>
+        <li><div class="num">3</div><div>Hands-on activities that encourage creativity and problem-solving</div></li>
+        <li><div class="num">4</div><div>Interactive robotics projects focused on real-world applications</div></li>
+        <li><div class="num">5</div><div>Capstone projects to build confidence, teamwork and innovation skills</div></li>
+        <li><div class="num">6</div><div>Final innovation expo to showcase student learning to parents and the community</div></li>
+      </ul>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">02 / 19</div>
+  </section>
+
+  <!-- ============== SLIDE 3 — What they'll learn ============== -->
+  <section class="s3" data-screen-label="03 What they learn">
+    <div class="topbar"><h2>What Your Child Will Learn</h2><div class="badge">Six core areas</div></div>
+    <div class="body">
+      <div class="grid">
+        <div class="tile"><div class="ix">01</div><div class="head">Robotics</div><p>Introduction to basic robotics concepts and components</p></div>
+        <div class="tile"><div class="ix">02</div><div class="head">Electric Circuits</div><p>Understanding how circuits power devices and systems</p></div>
+        <div class="tile"><div class="ix">03</div><div class="head">Motor Control</div><p>Controlling motors to create movement and actions</p></div>
+        <div class="tile"><div class="ix">04</div><div class="head">Sound Generation</div><p>Learning how to produce sound using circuits</p></div>
+        <div class="tile"><div class="ix">05</div><div class="head">Sensors</div><p>Exploring light sensors and their practical applications</p></div>
+        <div class="tile"><div class="ix">06</div><div class="head">Problem Solving</div><p>Developing critical thinking through hands-on projects</p></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">03 / 19</div>
+  </section>
+
+  <!-- ============== SLIDE 4 — Journey ============== -->
+  <section class="s4" data-screen-label="04 Journey overview">
+    <div class="topbar"><h2>Learning Journey Overview</h2><div class="badge">At a glance</div></div>
+    <div class="body">
+      <div class="left">
+        <div class="brand">Join Botics</div>
+        <div class="tag">Hands-on Learning</div>
+        <p>Students explore hands-on learning in electronics, sensors, automation, circuits, and motors. Three showcase sessions allow parents to observe progress, culminating in a STEM.org accredited certificate.</p>
+      </div>
+      <div class="right">
+        <div class="stats">
+          <div class="stat"><div class="n">32</div><div class="l">Sessions</div></div>
+          <div class="stat"><div class="n">40</div><div class="l">Minutes each</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">Showcases</div></div>
+          <div class="stat"><div class="n">1</div><div class="l">STEM Certificate</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">04 / 19</div>
+  </section>
+
+  <!-- ============== Project slides 5–21 ============== -->
+  <!-- Template helper -->
+  <!-- Slide 5 -->
+  <section class="sp" data-screen-label="05 Introduction to Components">
+    <div class="topbar"><h2>Introduction to Components</h2><div class="badge">Session 1</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Building blocks of electronics</h3>
+        <p>Students explore the fundamental building blocks of electronics — input modules, output modules, and power sources. They learn how these components connect and work together.</p>
+        <div class="real"><strong>Real World Use</strong>This foundational knowledge is the basis for every project that follows. Just like learning the alphabet before reading, understanding components is the first step to building working circuits.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Identify, connect, power</h4>
+        <ul>
+          <li>What input and output components are</li>
+          <li>How power modules supply energy to circuits</li>
+          <li>Identifying components by sight and function</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><rect x="6" y="6" width="20" height="20" rx="3"/><rect x="34" y="6" width="20" height="20" rx="3"/><rect x="6" y="34" width="20" height="20" rx="3"/><rect x="34" y="34" width="20" height="20" rx="3"/><line x1="26" y1="16" x2="34" y2="16"/><line x1="16" y1="26" x2="16" y2="34"/><line x1="44" y1="26" x2="44" y2="34"/><line x1="26" y1="44" x2="34" y2="44"/></svg></div><div class="word">Building Blocks<small>Modules & power</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">05 / 19</div>
+  </section>
+
+  <!-- Slide 6 -->
+  <section class="sp" data-screen-label="06 Torch">
+    <div class="topbar"><h2>Torch (Flashlight)</h2><div class="badge">Session 2</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>A working flashlight</h3>
+        <p>Students build a working flashlight by connecting an LED module to a power source through a switch. They discover how a simple circuit can control light.</p>
+        <div class="real"><strong>Real World Use</strong>The same on/off circuit logic powers everything from bedroom lamps to traffic signals. Students see immediately how electricity moves through a path to create light.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Switches, LEDs, complete circuits</h4>
+        <ul>
+          <li>How electric circuits and switches work</li>
+          <li>What an LED is and how it produces light</li>
+          <li>Building a complete circuit from components</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><rect x="8" y="22" width="22" height="16" rx="3"/><polygon points="30,18 52,8 52,52 30,42"/><circle cx="14" cy="30" r="2" fill="currentColor"/></svg></div><div class="word">Flashlight<small>LED + switch</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">06 / 19</div>
+  </section>
+
+  <!-- Slide 7 -->
+  <section class="sp" data-screen-label="07 Electric Fan">
+    <div class="topbar"><h2>Electric Fan</h2><div class="badge">Session 3</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Electricity into motion</h3>
+        <p>Students connect a motor module with a switch and power source to create a hand-held electric fan. They see how electricity is converted into mechanical motion.</p>
+        <div class="real"><strong>Real World Use</strong>Motors are inside almost every machine — fans, washing machines, electric cars. Understanding the basic motor circuit unlocks the concept behind countless real-world devices.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Motors and energy conversion</h4>
+        <ul>
+          <li>Introduction to electric motors and how they spin</li>
+          <li>Controlling a motor with a switch</li>
+          <li>Energy conversion from electrical to mechanical</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="22"/><circle cx="30" cy="30" r="4" fill="currentColor"/><ellipse cx="30" cy="14" rx="5" ry="9"/><ellipse cx="43" cy="34" rx="9" ry="5"/><ellipse cx="17" cy="34" rx="9" ry="5"/></svg></div><div class="word">Electric Fan<small>Motor spinning</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">07 / 19</div>
+  </section>
+
+  <!-- Slide 8 -->
+  <section class="sp" data-screen-label="08 Hypnotizing Wheel">
+    <div class="topbar"><h2>Hypnotizing Wheel</h2><div class="badge">Session 4</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Spin makes patterns</h3>
+        <p>A patterned disc is attached to a motor and set spinning. Students observe the fascinating visual effects that appear — stripes, spirals, and colour blending from the rotation.</p>
+        <div class="real"><strong>Real World Use</strong>This project introduces the idea that mechanical systems can be used for creative and artistic purposes, not just functional ones — an early glimpse of design thinking.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Speed, motion, illusion</h4>
+        <ul>
+          <li>How spinning motion creates visual patterns</li>
+          <li>The relationship between speed and visual effects</li>
+          <li>Creative applications of motor-driven rotation</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="22"/><circle cx="30" cy="30" r="14"/><circle cx="30" cy="30" r="6"/><line x1="30" y1="8" x2="30" y2="52"/><line x1="8" y1="30" x2="52" y2="30"/></svg></div><div class="word">Spinning Wheel<small>Patterns from motion</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">08 / 19</div>
+  </section>
+
+  <!-- Slide 9 -->
+  <section class="sp" data-screen-label="09 Lamp (Light Sensor)">
+    <div class="topbar"><h2>Lamp (Light Sensor)</h2><div class="badge">Session 5</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>A lamp that reacts to dark</h3>
+        <p>Using a light sensor connected to an LED or buzzer, students build a lamp that turns on automatically when the room gets dark — just like a real nightlight.</p>
+        <div class="real"><strong>Real World Use</strong>Street lights, phone screen brightness, and security lights all use light sensors to react to their surroundings. This is a student's first taste of smart, automated technology.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Sensors and automation</h4>
+        <ul>
+          <li>What a light sensor (LDR) is and how it works</li>
+          <li>Automation: a device that reacts to its environment</li>
+          <li>Building a circuit that responds to conditions</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="22" r="14"/><line x1="22" y1="38" x2="38" y2="38"/><line x1="24" y1="44" x2="36" y2="44"/><line x1="30" y1="50" x2="30" y2="50"/><rect x="26" y="46" width="8" height="4" rx="1"/><line x1="30" y1="6" x2="30" y2="2"/><line x1="14" y1="14" x2="11" y2="11"/><line x1="46" y1="14" x2="49" y2="11"/></svg></div><div class="word">Night Lamp<small>Senses the dark</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">09 / 19</div>
+  </section>
+
+  <!-- Slide 10 -->
+  <section class="sp" data-screen-label="10 Doorbell">
+    <div class="topbar"><h2>Doorbell</h2><div class="badge">Session 6</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Press to ring</h3>
+        <p>Students create a working doorbell using a push-button switch and a buzzer module. Pressing the button completes the circuit and makes the buzzer sound.</p>
+        <div class="real"><strong>Real World Use</strong>Every alarm, notification sound, and buzzer in everyday life uses the same principle. This project shows how user interaction (pressing a button) triggers a system response.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Sound, buttons, completion</h4>
+        <ul>
+          <li>How sound is generated using electrical circuits</li>
+          <li>How a push-button switch works</li>
+          <li>Completing a circuit to trigger an output (sound)</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="10" r="2.5" fill="currentColor"/><rect x="16" y="14" width="28" height="24" rx="14"/><rect x="12" y="38" width="36" height="5" rx="2"/><circle cx="30" cy="48" r="3" fill="currentColor"/></svg></div><div class="word">Doorbell<small>Press to ring</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">10 / 19</div>
+  </section>
+
+
+  <!-- Slide 12 -->
+  <section class="sp" data-screen-label="12 Sunrise Alarm">
+    <div class="topbar"><h2>Sunrise Alarm</h2><div class="badge">Session 7</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Wake to light, not time</h3>
+        <p>A light sensor detects the change in light level in the morning (mimicking sunrise) and activates a buzzer. Students build a smart alarm triggered by light, not time.</p>
+        <div class="real"><strong>Real World Use</strong>Sunrise alarms are real products that wake people more gently by mimicking natural light. This project shows how automation can improve daily life.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Sensors as triggers</h4>
+        <ul>
+          <li>Using sensors to automate a response</li>
+          <li>Threshold-based triggering (react when light changes)</li>
+          <li>Combining multiple components in one system</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="10"/><line x1="30" y1="4" x2="30" y2="14"/><line x1="30" y1="46" x2="30" y2="56"/><line x1="4" y1="30" x2="14" y2="30"/><line x1="46" y1="30" x2="56" y2="30"/><line x1="11" y1="11" x2="18" y2="18"/><line x1="42" y1="42" x2="49" y2="49"/><line x1="11" y1="49" x2="18" y2="42"/><line x1="42" y1="18" x2="49" y2="11"/></svg></div><div class="word">Sunrise Alarm<small>Wakes with light</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">11 / 19</div>
+  </section>
+
+  <!-- Slide 13 -->
+  <section class="sp" data-screen-label="13 RGB Disc">
+    <div class="topbar"><h2>RGB Disc</h2><div class="badge">Session 8</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Mixing colours with light</h3>
+        <p>Students control an RGB LED module with different switches to produce different colours — red, green, blue, and mixtures. They experiment with colour mixing through electronics.</p>
+        <div class="real"><strong>Real World Use</strong>Every coloured screen — phone, TV, monitor — uses RGB pixels. Understanding colour mixing through electronics is a foundational concept in display technology.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Additive colour mixing</h4>
+        <ul>
+          <li>How RGB LEDs produce multiple colours</li>
+          <li>Mixing red, green, and blue light</li>
+          <li>Controlling multiple outputs independently</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="22" cy="24" r="14" fill="#E55B66" stroke="#0F2545" opacity="0.85"/><circle cx="38" cy="24" r="14" fill="#3DBE74" stroke="#0F2545" opacity="0.85"/><circle cx="30" cy="40" r="14" fill="#4D8FFF" stroke="#0F2545" opacity="0.85"/></svg></div><div class="word">Colour Mixing<small>Red · Green · Blue</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">12 / 19</div>
+  </section>
+
+  <!-- Slide 14 -->
+  <section class="sp" data-screen-label="14 Wheely Car">
+    <div class="topbar"><h2>Wheely Car</h2><div class="badge">Session 9</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>From motor to motion</h3>
+        <p>Students connect a motor module to wheels and use switches to make a moving toy car. They build a simple motorised vehicle and control its direction.</p>
+        <div class="real"><strong>Real World Use</strong>Every vehicle with an electric motor — from toy cars to electric vehicles — shares this basic principle. This project bridges physical mechanics with electronics.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Mechanics meets electronics</h4>
+        <ul>
+          <li>Motorised movement and wheel mechanics</li>
+          <li>Combining wheels, axles, and motors</li>
+          <li>Controlling direction with switches</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><rect x="18" y="14" width="26" height="14" rx="3"/><rect x="6" y="24" width="48" height="16" rx="4"/><circle cx="18" cy="44" r="6"/><circle cx="42" cy="44" r="6"/><circle cx="18" cy="44" r="2" fill="currentColor"/><circle cx="42" cy="44" r="2" fill="currentColor"/></svg></div><div class="word">Wheely Car<small>Wheels + motor</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">13 / 19</div>
+  </section>
+
+  <!-- Slide 15 -->
+  <section class="sp" data-screen-label="15 Magician's Robot">
+    <div class="topbar"><h2>Magician's Robot</h2><div class="badge">Session 10</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Gesture-controlled robot</h3>
+        <p>Using a proximity or IR sensor, students build a robot that triggers a buzzer and LED when a hand is waved near it — like a magician's trick controlled by gesture.</p>
+        <div class="real"><strong>Real World Use</strong>Touchless interfaces — automatic taps, motion-activated lights, gesture-controlled devices — all use proximity sensing. This project introduces the idea that robots can 'see' without eyes.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Proximity and IR sensing</h4>
+        <ul>
+          <li>How proximity and IR sensors detect objects</li>
+          <li>Gesture-based control concepts</li>
+          <li>Combining sensor input with multiple outputs</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><line x1="30" y1="6" x2="30" y2="14"/><circle cx="30" cy="5" r="2.5" fill="currentColor"/><rect x="12" y="14" width="36" height="30" rx="5"/><circle cx="22" cy="26" r="3" fill="currentColor"/><circle cx="38" cy="26" r="3" fill="currentColor"/><rect x="22" y="34" width="16" height="4" rx="2"/><rect x="8" y="22" width="4" height="10" rx="2"/><rect x="48" y="22" width="4" height="10" rx="2"/><rect x="18" y="46" width="8" height="8" rx="2"/><rect x="34" y="46" width="8" height="8" rx="2"/></svg></div><div class="word">Magic Robot<small>Senses your hand</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">14 / 19</div>
+  </section>
+
+  <!-- Slide 16 -->
+  <section class="sp" data-screen-label="16 Touch Me Not Robot">
+    <div class="topbar"><h2>Touch Me Not Robot</h2><div class="badge">Session 11</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>A robot that reacts to touch</h3>
+        <p>A robot that reacts when touched — built using a touch sensor that triggers a motor and other outputs. The robot 'jumps' or moves in response to physical contact.</p>
+        <div class="real"><strong>Real World Use</strong>Touch-sensitive technology is everywhere — smartphones, tablets, interactive kiosks. This project shows how devices can respond to human touch, a fundamental concept in HCI.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Touch as input</h4>
+        <ul>
+          <li>How touch sensors detect contact</li>
+          <li>Building interactive, responsive circuits</li>
+          <li>Connecting sensor input to motor output</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><rect x="20" y="20" width="20" height="26" rx="4"/><circle cx="30" cy="14" r="6"/><line x1="14" y1="50" x2="46" y2="50"/><line x1="30" y1="20" x2="30" y2="30" stroke-dasharray="2 2"/><circle cx="30" cy="14" r="2" fill="currentColor"/></svg></div><div class="word">Touch Robot<small>Reacts to a tap</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">15 / 19</div>
+  </section>
+
+
+  <!-- Slide 18 -->
+  <section class="sp" data-screen-label="18 Smart Street Light">
+    <div class="topbar"><h2>Smart Street Light</h2><div class="badge">Session 12</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Lights that know when it's dark</h3>
+        <p>Students build a miniature street light that automatically turns on when it gets dark, using a light sensor to control the LED — just like real street lights in your city.</p>
+        <div class="real"><strong>Real World Use</strong>Real smart street lights save cities millions in electricity by only lighting up when needed. This project connects classroom learning to genuine civic technology.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Smart infrastructure</h4>
+        <ul>
+          <li>Applying light-sensor automation to real-world problems</li>
+          <li>Building a complete automated system independently</li>
+          <li>Understanding how smart infrastructure saves energy</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><rect x="20" y="10" width="22" height="14" rx="3"/><circle cx="31" cy="17" r="3" fill="currentColor"/><line x1="31" y1="24" x2="31" y2="50"/><line x1="22" y1="50" x2="40" y2="50"/><line x1="14" y1="30" x2="18" y2="30"/><line x1="44" y1="30" x2="48" y2="30"/></svg></div><div class="word">Street Light<small>On when it’s dark</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">16 / 19</div>
+  </section>
+
+  <!-- Slide 19 -->
+  <section class="sp" data-screen-label="19 Beep Player">
+    <div class="topbar"><h2>Beep Player</h2><div class="badge">Session 13</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>Electronic melodies</h3>
+        <p>Students programme a buzzer to play simple musical notes and melodies using different input components. They explore how frequency creates pitch and rhythm.</p>
+        <div class="real"><strong>Real World Use</strong>Musical instruments, alarms, and notification tones all rely on controlled frequency. This project introduces the relationship between electronics and sound — the basis of electronic music.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Frequency, pitch, rhythm</h4>
+        <ul>
+          <li>How buzzers produce different sounds (frequency)</li>
+          <li>Creating sequences of sounds to form a melody</li>
+          <li>Using input components to trigger sound patterns</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="18" cy="44" r="6"/><line x1="24" y1="44" x2="24" y2="12"/><line x1="42" y1="44" x2="42" y2="16"/><circle cx="36" cy="44" r="6"/><line x1="24" y1="12" x2="42" y2="16"/><line x1="24" y1="22" x2="42" y2="26"/></svg></div><div class="word">Beep Player<small>Music with buzzers</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">17 / 19</div>
+  </section>
+
+  <!-- Slide 20 -->
+  <section class="sp" data-screen-label="20 Light Controlled Machine">
+    <div class="topbar"><h2>Light Controlled Machine</h2><div class="badge">Session 14</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>A machine that thinks</h3>
+        <p>Students build a system where a motor or LED turns on or off based on the intensity of light detected by a sensor. The machine responds automatically to its environment.</p>
+        <div class="real"><strong>Real World Use</strong>Solar-powered systems, automatic curtains, and smart home devices all use this kind of light-level automation. Students see how machines can think for themselves using sensor data.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Self-regulating systems</h4>
+        <ul>
+          <li>Using light levels to control machines</li>
+          <li>Analogue sensor input driving output decisions</li>
+          <li>Building a fully automated, self-regulating system</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><circle cx="20" cy="22" r="8"/><line x1="20" y1="6" x2="20" y2="11"/><line x1="20" y1="33" x2="20" y2="38"/><line x1="4" y1="22" x2="9" y2="22"/><line x1="31" y1="22" x2="36" y2="22"/><line x1="9" y1="11" x2="13" y2="15"/><line x1="27" y1="29" x2="31" y2="33"/><line x1="9" y1="33" x2="13" y2="29"/><line x1="27" y1="15" x2="31" y2="11"/><line x1="22" y1="46" x2="50" y2="46"/><polygon points="44,40 52,46 44,52 44,48 40,48 40,44 44,44"/></svg></div><div class="word">Smart Machine<small>Light tells it what to do</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">18 / 19</div>
+  </section>
+
+  <!-- Slide 21 -->
+  <section class="sp" data-screen-label="21 Final Showcase">
+    <div class="topbar"><h2>Final Showcase &amp; Reflection</h2><div class="badge">Grand Finale</div></div>
+    <div class="body">
+      <div class="lead">
+        <div class="eyebrow">What is it?</div>
+        <h3>The grand finale</h3>
+        <p>The grand finale! Students present their best projects, explain the science and technology behind them, and celebrate their achievements. STEM.org certificates are awarded.</p>
+        <div class="real"><strong>Real World Use</strong>The final showcase mirrors real-world product demonstrations and science fairs. Students leave with a certificate, a portfolio of projects, and the confidence that they can build real things.</div>
+      </div>
+      <div class="learn">
+        <div class="ttl">What we'll learn</div>
+        <h4>Year-end reflection</h4>
+        <ul>
+          <li>Presenting to a wider audience with confidence</li>
+          <li>Reviewing the full year of learning</li>
+          <li>Receiving STEM.org accredited certification</li>
+        </ul>
+        <div class="preview-art"><div class="ph"><div class="deco"></div><div class="deco2"></div><div class="icon"><svg viewBox="0 0 60 60"><polygon points="30,12 54,24 30,36 6,24"/><rect x="16" y="30" width="28" height="14" rx="2"/><line x1="50" y1="26" x2="50" y2="44"/><circle cx="50" cy="47" r="3" fill="currentColor"/></svg></div><div class="word">Graduation<small>STEM certificate</small></div></div></div>
+      </div>
+    </div>
+    <div class="footer-mark">Join Botics</div>
+    <div class="slide-num">19 / 19</div>
+  </section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+</body>
+</html>
