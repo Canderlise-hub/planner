@@ -1,0 +1,763 @@
+<title>Lolldaiga Woods Reel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,900;1,700&family=Fraunces:ital,opsz,wght@1,9..144,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------------------------------------------------------------
+   Screening room: a deliberate single dark world (cinema, not a doc UI).
+   Every color below is explicit so the page holds regardless of host
+   theme — no light/dark branch, by design.
+--------------------------------------------------------------------- */
+:root{
+  --charcoal:#1c1a15;
+  --charcoal-3:#100f0b;
+  --ivory:#f2ede1;
+  --ivory-dim:#c9c2ae;
+  --gold:#c7a868;
+  --bark:#6b4a34;
+  --ember:#b9633b;
+  --line: rgba(242,237,225,0.14);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--charcoal-3);
+  color:var(--ivory);
+  font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+::selection{ background:var(--gold); color:var(--charcoal-3); }
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+.stage{
+  max-width:1180px;
+  margin:0 auto;
+  padding: clamp(20px,4vw,56px) clamp(16px,4vw,48px) clamp(48px,7vw,88px);
+  display:flex;
+  flex-direction:column;
+  gap: clamp(28px,4vw,48px);
+}
+
+/* ---------------- top chrome ---------------- */
+.chrome-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:12px 24px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+.wordmark{
+  font-weight:900;
+  font-size:clamp(20px,2.6vw,28px);
+  letter-spacing:-0.01em;
+}
+.wordmark em{
+  font-style:italic;
+  font-family:'Fraunces', Georgia, serif;
+  font-weight:500;
+  color:var(--gold);
+  margin-left:2px;
+}
+.chrome-meta{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.chrome-meta .tag{
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+}
+
+/* ---------------- screening / film ---------------- */
+.screening{
+  display:flex;
+  justify-content:center;
+}
+.film{
+  position:relative;
+  height:min(76vh,760px);
+  aspect-ratio:9/16;
+  width:auto;
+  background:var(--charcoal);
+  border:1px solid rgba(199,168,104,0.22);
+  box-shadow: 0 40px 90px -40px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.4);
+  overflow:hidden;
+  container-type: inline-size;
+  container-name: film;
+  cursor:pointer;
+}
+
+/* film grain, cheap + constant */
+.grain{
+  position:absolute; inset:-20%;
+  z-index:40;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+.vignette{
+  position:absolute; inset:0; z-index:39; pointer-events:none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(16,15,11,0.55) 100%);
+}
+
+/* ---------------- HUD: progress / timecode / scene index ---------------- */
+.hud{
+  position:absolute; top:0; left:0; right:0; z-index:50;
+  display:flex; justify-content:space-between; align-items:center;
+  padding: 3.2cqw 4cqw 0;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:2.6cqw;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color: var(--ivory-dim);
+  pointer-events:none;
+}
+.progress{
+  position:absolute; top:0; left:0; right:0; z-index:50;
+  height:2px; background:rgba(242,237,225,0.14);
+}
+.progress-fill{
+  height:100%; width:0%;
+  background:var(--gold);
+}
+
+/* ---------------- scenes ---------------- */
+.scene{ position:absolute; inset:0; }
+.plate{
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  filter:saturate(.9) contrast(1.05);
+}
+.tag-label{
+  position:absolute; left:4cqw; bottom:3.6cqw; z-index:5;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:2.3cqw; letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(242,237,225,.5);
+}
+
+/* graded plate tones (stand-ins for real footage — see README) */
+.plate-aerial{ background-image: linear-gradient(178deg,#d9cda9 0%,#c3b586 20%,#94975f 42%,#5c6440 64%,#2e2c20 90%); }
+.plate-wildlife{ background-image: linear-gradient(155deg,#332c1e 0%,#6b4a34 42%,#93714a 72%,#c7a868 100%); }
+.plate-landscape{ background-image: linear-gradient(205deg,#e9deba 0%,#c7a868 28%,#82855a 58%,#3d4530 100%); }
+.plate-landscape-2{ background-image: linear-gradient(198deg,#e2d3a8 0%,#b79a5f 30%,#5f6640 62%,#2b2c1f 100%); }
+.plate-macro{ background-image:
+  repeating-linear-gradient(112deg, rgba(0,0,0,0.14) 0 3cqw, transparent 3cqw 7cqw),
+  linear-gradient(160deg,#6b4a34 0%,#54391f 55%,#332616 100%); }
+.plate-arch{ background-image: linear-gradient(150deg,#efe9da 0%,#cfc6a9 34%,#93a06f 64%,#3f4a34 100%); }
+.plate-wild{ background-image: linear-gradient(150deg,#3f4a34 0%,#5b6146 38%,#8a8264 68%,#c7a868 100%); }
+.plate-doorway{ background-image: radial-gradient(ellipse 70% 90% at 50% 40%, #d9c69a 0%, #7c5b3a 45%, #1c1a15 92%); }
+.plate-curtain{ background-image:
+  repeating-linear-gradient(90deg, rgba(242,237,225,0.10) 0 1.6cqw, transparent 1.6cqw 5cqw),
+  linear-gradient(200deg,#cbb98c 0%,#7d6a44 55%,#302a1d 100%); }
+.plate-door{ background-image: linear-gradient(120deg,#100f0b 0%,#3a2f1c 35%,#c7a868 60%,#f2ede1 100%); }
+.plate-guests{ background-image: linear-gradient(190deg,#e7dcbd 0%,#b79a5f 30%,#6b6a44 60%,#37341f 100%); }
+.plate-quick1{ background-image: linear-gradient(160deg,#cdb98a 0%,#8a8264 55%,#454b36 100%); }
+.plate-quick2{ background-image: linear-gradient(200deg,#b9633b 0%,#8a6a43 45%,#454b36 100%); }
+.plate-quick3{ background-image: linear-gradient(140deg,#e2d3a8 0%,#7c8058 55%,#2e2c20 100%); }
+.plate-quick4{ background-image: linear-gradient(170deg,#f2ede1 0%,#c7a868 40%,#6b4a34 100%); }
+.plate-golden{ background-image: linear-gradient(195deg,#f4cf94 0%,#e0985a 26%,#b9633b 50%,#5c4028 76%,#1c1a15 100%); }
+
+/* ---------------- typography objects ---------------- */
+.type-mega{
+  position:absolute; inset:0; z-index:20;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; letter-spacing:-0.035em; line-height:.86;
+  font-size:19cqw; text-align:center; color:var(--ivory);
+  padding:0 2cqw;
+}
+.type-mega.bleed{ margin:0 -6cqw; }
+
+.type-line{
+  position:absolute; left:6cqw; right:10cqw; bottom:9cqw; z-index:20;
+  font-weight:500; font-style:italic; font-family:'Fraunces', Georgia, serif;
+  font-size:6.2cqw; line-height:1.15; color:var(--ivory);
+  text-wrap:balance;
+}
+.type-lower{
+  position:absolute; left:5.5cqw; bottom:9cqw; z-index:20;
+  font-weight:700; font-size:8.4cqw; letter-spacing:-0.01em; color:var(--ivory);
+}
+.type-slide{
+  position:absolute; top:44%; left:0; right:0; z-index:20;
+  font-weight:900; font-size:15cqw; letter-spacing:-0.03em; color:var(--charcoal);
+  background:var(--gold);
+  padding:1.4cqw 0;
+  white-space:nowrap;
+}
+.type-mask{
+  position:absolute; inset:0; z-index:21;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:22cqw; letter-spacing:-0.03em; line-height:.86;
+  background-image: linear-gradient(178deg,#d9cda9 0%,#c3b586 20%,#94975f 42%,#5c6440 64%,#2e2c20 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  transform-origin:center;
+}
+.number-mega{
+  position:absolute; inset:0; z-index:20;
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+  padding-left:6cqw;
+}
+.number-mega .num{ font-weight:900; font-size:34cqw; letter-spacing:-0.04em; line-height:.78; color:var(--ivory); }
+.number-mega .lbl{ font-weight:600; font-size:6.4cqw; letter-spacing:.06em; color:var(--gold); margin-top:.4cqw; }
+
+.frame-marks{
+  position:absolute; inset:6cqw; z-index:22; pointer-events:none;
+}
+.frame-marks::before,.frame-marks::after,
+.frame-marks i::before,.frame-marks i::after{ content:''; position:absolute; width:5cqw; height:5cqw; border:1.6px solid var(--gold); }
+.frame-marks::before{ top:0; left:0; border-right:0; border-bottom:0; }
+.frame-marks::after{ bottom:0; right:0; border-left:0; border-top:0; }
+.frame-marks i::before{ top:0; right:0; border-left:0; border-bottom:0; }
+.frame-marks i::after{ bottom:0; left:0; border-right:0; border-top:0; }
+.frame-tag{
+  position:absolute; top:-1.6cqw; left:6.4cqw; z-index:23;
+  font-family:'JetBrains Mono', monospace; font-size:2.4cqw; letter-spacing:.1em;
+  color:var(--gold); background:var(--charcoal); padding:0 .6cqw;
+}
+
+.split-l,.split-r{ position:absolute; inset:0; z-index:15; }
+.split-l{ clip-path: inset(0 50% 0 0); }
+.split-r{ clip-path: inset(0 0 0 50%); }
+.split-hair{
+  position:absolute; top:0; bottom:0; left:50%; width:1px; z-index:16;
+  background:var(--gold); transform:translateX(-.5px);
+}
+
+.card-full{
+  position:absolute; inset:0; z-index:25;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--ivory);
+}
+.card-full span{ font-weight:900; font-size:14cqw; letter-spacing:-0.02em; color:var(--charcoal); text-align:center; padding:0 6cqw; }
+
+.blackframe{ position:absolute; inset:0; z-index:60; background:#000; }
+
+.brand-card{
+  position:absolute; inset:0; z-index:30;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--charcoal); gap:1.6cqw;
+}
+.brand-card .mark{ width:9cqw; height:9cqw; border:1.4px solid var(--gold); border-radius:50%; position:relative; }
+.brand-card .mark::before{ content:''; position:absolute; inset:2.6cqw; border:1.4px solid var(--gold); border-radius:50%; }
+.brand-card .word{ font-weight:700; font-size:6.6cqw; letter-spacing:.14em; text-transform:uppercase; color:var(--ivory); }
+.brand-card .sub{ font-family:'JetBrains Mono', monospace; font-size:2.4cqw; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; }
+
+/* ---------------- captions ---------------- */
+.caption{
+  position:absolute; left:6cqw; right:6cqw; bottom:4.6cqw; z-index:45;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:3cqw; letter-spacing:.01em; line-height:1.35;
+  color:var(--ivory-dim);
+  opacity:0;
+}
+
+/* ---------------- play overlay ---------------- */
+.play-overlay{
+  position:absolute; inset:0; z-index:80;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  background:rgba(16,15,11,0.66);
+  backdrop-filter:blur(2px);
+  transition:opacity .35s ease;
+}
+.film.started .play-overlay{ opacity:0; pointer-events:none; }
+.play-btn{
+  width:64px; height:64px; border-radius:50%;
+  border:1.4px solid var(--gold); background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+}
+.play-btn svg{ margin-left:4px; }
+.play-label{
+  font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--ivory-dim);
+}
+
+/* ================================================================
+   TIMELINE — every animated node shares one 30s / linear / infinite
+   clock so nothing can drift out of sync with anything else.
+================================================================= */
+[data-tl]{ animation-duration:30s; animation-timing-function:linear; animation-iteration-count:infinite; animation-play-state:paused; }
+.film.playing [data-tl]{ animation-play-state:running; }
+
+/* Scene 1  0.00 – 13.33% (0–4s) */
+.s1-open        { animation-name:s1Open; }
+@keyframes s1Open{
+  0%{opacity:1; transform:scale(1);} 3.4%{opacity:1; transform:scale(1.025);}
+  3.5%{opacity:0;} 100%{opacity:0;}
+}
+.s1-solid       { animation-name:s1Solid; display:flex; align-items:center; justify-content:center; background:var(--charcoal); }
+@keyframes s1Solid{
+  0%,3.45%{opacity:0;} 3.5%{opacity:1;} 6.6%{opacity:1;} 6.67%{opacity:0;} 100%{opacity:0;}
+}
+.s1-mask-el     { animation-name:s1Mask; }
+@keyframes s1Mask{
+  0%,6.6%{opacity:0; transform:scale(1);}
+  6.67%{opacity:1; transform:scale(1);}
+  8.1%{opacity:1; transform:scale(9);}
+  8.17%{opacity:0;} 100%{opacity:0;}
+}
+.s1-wide2       { animation-name:s1Wide2; }
+@keyframes s1Wide2{
+  0%,7.99%{opacity:0; transform:scale(1);}
+  8%{opacity:1;} 13.2%{opacity:1; transform:scale(1.03);}
+  13.33%{opacity:0;} 100%{opacity:0;}
+}
+.s1-line-el     { animation-name:s1Line; }
+@keyframes s1Line{
+  0%,8.6%{opacity:0; transform:translateY(6px);}
+  8.8%{opacity:1; transform:translateY(0);}
+  13.2%{opacity:1;} 13.33%{opacity:0;} 100%{opacity:0;}
+}
+
+/* Scene 2  13.33 – 30% (4–9s) */
+.s2-wild        { animation-name:s2Wild; }
+@keyframes s2Wild{
+  0%,13.3%{opacity:0;} 13.33%{opacity:1; transform:scale(1);}
+  16.6%{opacity:1; transform:scale(1.03);} 16.67%{opacity:0;} 100%{opacity:0;}
+}
+.s2-land        { animation-name:s2Land; }
+@keyframes s2Land{
+  0%,16.6%{opacity:0;} 16.67%{opacity:1;} 18.6%{opacity:1;} 18.67%{opacity:0;} 100%{opacity:0;}
+}
+.s2-crop        { animation-name:s2Crop; }
+@keyframes s2Crop{
+  0%,18.6%{opacity:0; transform:scale(1) translate(0,0);}
+  18.67%{opacity:1; transform:scale(1.9) translate(6%,-4%);}
+  20.6%{opacity:1; transform:scale(1.9) translate(6%,-4%);}
+  20.67%{opacity:0;} 100%{opacity:0;}
+}
+.s2-freeze      { animation-name:s2Freeze; }
+@keyframes s2Freeze{
+  0%,20.6%{opacity:0;} 20.67%{opacity:1;} 22%{opacity:1;} 22.17%{opacity:0;} 100%{opacity:0;}
+}
+.s2-freeze-marks{ animation-name:s2FreezeM; }
+@keyframes s2FreezeM{
+  0%,20.9%{opacity:0;} 21%{opacity:1;} 21.9%{opacity:1;} 22.1%{opacity:0;} 100%{opacity:0;}
+}
+.s2-back        { animation-name:s2Back; }
+@keyframes s2Back{
+  0%,22.09%{opacity:0;} 22.17%{opacity:1;} 23.3%{opacity:1;} 23.33%{opacity:0;} 100%{opacity:0;}
+}
+.s2-welcome     { animation-name:s2Welcome; }
+@keyframes s2Welcome{
+  0%,23.29%{opacity:0;} 23.33%{opacity:1;} 25.2%{opacity:1;} 25.33%{opacity:0;} 100%{opacity:0;}
+}
+.s2-lolldaiga   { animation-name:s2Lolldaiga; }
+@keyframes s2Lolldaiga{
+  0%,25.32%{opacity:0; transform:scale(1.12);}
+  25.33%{opacity:1; transform:scale(1.12);}
+  26%{transform:scale(1);}
+  29.9%{opacity:1;} 30%{opacity:0;} 100%{opacity:0;}
+}
+
+/* Scene 3  30 – 46.67% (9–14s) */
+.s3-wide        { animation-name:s3Wide; }
+@keyframes s3Wide{
+  0%,30%{opacity:0;} 30.01%{opacity:1; transform:scale(1);}
+  33.9%{opacity:1; transform:scale(1.025);} 34%{opacity:0;} 100%{opacity:0;}
+}
+.s3-macro       { animation-name:s3Macro; }
+@keyframes s3Macro{
+  0%,33.99%{opacity:0;} 34%{opacity:1;} 40%{opacity:1;} 40.17%{opacity:0;} 100%{opacity:0;}
+}
+.s3-acreage     { animation-name:s3Acreage; }
+@keyframes s3Acreage{
+  0%,35.9%{opacity:0;} 36%{opacity:1;} 40%{opacity:1;} 40.17%{opacity:0;} 100%{opacity:0;}
+}
+.s3-wide2       { animation-name:s3Wide2; }
+@keyframes s3Wide2{
+  0%,40.16%{opacity:0;} 40.17%{opacity:1;} 44.6%{opacity:1;} 44.67%{opacity:0;} 100%{opacity:0;}
+}
+.s3-slide       { animation-name:s3Slide; }
+@keyframes s3Slide{
+  0%,41%{opacity:0; transform:translateX(-115%);}
+  41.2%{opacity:1; transform:translateX(-115%);}
+  43.3%{opacity:1; transform:translateX(115%);}
+  43.4%{opacity:0;} 100%{opacity:0;}
+}
+.s3-split       { animation-name:s3Split; }
+@keyframes s3Split{
+  0%,44.66%{opacity:0;} 44.67%{opacity:1;} 46.67%{opacity:1;} 46.68%{opacity:0;} 100%{opacity:0;}
+}
+.s3-split-l     { animation-name:s3SplitL; }
+@keyframes s3SplitL{
+  0%,44.66%{clip-path: inset(0 50% 0 0);}
+  44.67%{clip-path: inset(0 50% 0 0);}
+  46.2%{clip-path: inset(0 50% 0 0);}
+  46.6%{clip-path: inset(0 0 0 0);}
+  100%{clip-path: inset(0 0 0 0);}
+}
+.s3-split-r     { animation-name:s3SplitR; }
+@keyframes s3SplitR{
+  0%,44.66%{clip-path: inset(0 0 0 50%);}
+  44.67%{clip-path: inset(0 0 0 50%);}
+  46.2%{clip-path: inset(0 0 0 50%);}
+  46.6%{clip-path: inset(0 0 0 0);}
+  100%{clip-path: inset(0 0 0 0);}
+}
+.s3-hair        { animation-name:s3Hair; }
+@keyframes s3Hair{
+  0%,44.66%{opacity:0;} 44.67%{opacity:1;} 46.2%{opacity:1;} 46.6%{opacity:0;} 100%{opacity:0;}
+}
+
+/* Scene 4  46.67 – 63.33% (14–19s) */
+.s4-door        { animation-name:s4Door; }
+@keyframes s4Door{
+  0%,46.67%{opacity:0;} 46.68%{opacity:1; transform:scale(1);}
+  50.5%{opacity:1; transform:scale(1.04);} 50.67%{opacity:0;} 100%{opacity:0;}
+}
+.s4-yourvilla   { animation-name:s4Villa; }
+@keyframes s4Villa{
+  0%,49.5%{opacity:0;} 49.6%{opacity:1;} 50.6%{opacity:1;} 50.67%{opacity:0;} 100%{opacity:0;}
+}
+.s4-curtain     { animation-name:s4Curtain; }
+@keyframes s4Curtain{
+  0%,50.66%{opacity:0; transform:translateX(0);}
+  50.67%{opacity:1;} 53.3%{opacity:1; transform:translateX(-2%);}
+  53.33%{opacity:0;} 100%{opacity:0;}
+}
+.s4-yourspace1  { animation-name:s4Space1; }
+@keyframes s4Space1{
+  0%,52.6%{opacity:0;} 52.7%{opacity:1;} 53.3%{opacity:1;} 53.33%{opacity:0;} 100%{opacity:0;}
+}
+.s4-doorhand    { animation-name:s4Doorhand; }
+@keyframes s4Doorhand{
+  0%,53.32%{opacity:0;} 53.33%{opacity:1;} 56.6%{opacity:1;} 56.67%{opacity:0;} 100%{opacity:0;}
+}
+.s4-card        { animation-name:s4Card; }
+@keyframes s4Card{
+  0%,56.66%{opacity:0;} 56.67%{opacity:1;} 60%{opacity:1;} 60.01%{opacity:0;} 100%{opacity:0;}
+}
+.s4-guests      { animation-name:s4Guests; }
+@keyframes s4Guests{
+  0%,60%{opacity:0;} 60.01%{opacity:1; transform:scale(1);}
+  63.2%{opacity:1; transform:scale(1.02);} 63.33%{opacity:0;} 100%{opacity:0;}
+}
+
+/* Scene 5  63.33 – 83.33% (19–25s) */
+.s5-q1{ animation-name:s5Q1; } @keyframes s5Q1{ 0%,63.33%{opacity:0;} 63.34%{opacity:1;} 65.6%{opacity:1;} 65.67%{opacity:0;} 100%{opacity:0;} }
+.s5-q2{ animation-name:s5Q2; } @keyframes s5Q2{ 0%,65.66%{opacity:0;} 65.67%{opacity:1;} 68%{opacity:1;} 68.17%{opacity:0;} 100%{opacity:0;} }
+.s5-q3{ animation-name:s5Q3; } @keyframes s5Q3{ 0%,68.16%{opacity:0;} 68.17%{opacity:1;} 70%{opacity:1;} 70.17%{opacity:0;} 100%{opacity:0;} }
+.s5-q4{ animation-name:s5Q4; } @keyframes s5Q4{ 0%,70.16%{opacity:0;} 70.17%{opacity:1;} 71.67%{opacity:1;} 71.83%{opacity:0;} 100%{opacity:0;} }
+.s5-long        { animation-name:s5Long; }
+@keyframes s5Long{
+  0%,71.82%{opacity:0; transform:scale(1.02);}
+  71.83%{opacity:1;} 80%{transform:scale(1);} 83.2%{opacity:1;} 83.33%{opacity:0;} 100%{opacity:0;}
+}
+.s5-number      { animation-name:s5Num; }
+@keyframes s5Num{
+  0%,74.9%{opacity:0; transform:translateX(-14px);}
+  75%{opacity:1; transform:translateX(0);}
+  83.2%{opacity:1;} 83.33%{opacity:0;} 100%{opacity:0;}
+}
+
+/* Scene 6  83.33 – 100% (25–30s) */
+.s6-golden      { animation-name:s6Golden; }
+@keyframes s6Golden{
+  0%,83.33%{opacity:0;} 83.34%{opacity:1; transform:scale(1);}
+  99.6%{opacity:1; transform:scale(1.015);} 99.9%{opacity:1;} 100%{opacity:0;}
+}
+.s6-line1       { animation-name:s6Line1; }
+@keyframes s6Line1{
+  0%,85.5%{opacity:0;} 91%{opacity:1;} 95.6%{opacity:1;} 95.67%{opacity:0;} 100%{opacity:0;}
+}
+.s6-line2       { animation-name:s6Line2; }
+@keyframes s6Line2{
+  0%,95.6%{opacity:0;} 95.67%{opacity:1;} 95.9%{opacity:1;} 95.93%{opacity:0;} 100%{opacity:0;}
+}
+.s6-black       { animation-name:s6Black; }
+@keyframes s6Black{
+  0%,95.66%{opacity:0;} 95.67%{opacity:1;} 96.6%{opacity:1;} 96.67%{opacity:0;} 100%{opacity:0;}
+}
+.s6-brand       { animation-name:s6Brand; }
+@keyframes s6Brand{
+  0%,96.66%{opacity:0;} 96.67%{opacity:1;} 99.9%{opacity:1;} 100%{opacity:0;}
+}
+
+/* caption windows */
+#cap1{ animation-name:cap1; } @keyframes cap1{ 0%,1%{opacity:0;} 1.5%{opacity:1;} 12.8%{opacity:1;} 13.2%{opacity:0;} 100%{opacity:0;} }
+#cap2{ animation-name:cap2; } @keyframes cap2{ 0%,14%{opacity:0;} 14.5%{opacity:1;} 29%{opacity:1;} 29.6%{opacity:0;} 100%{opacity:0;} }
+#cap3{ animation-name:cap3; } @keyframes cap3{ 0%,30.9%{opacity:0;} 31.3%{opacity:1;} 45.5%{opacity:1;} 46.2%{opacity:0;} 100%{opacity:0;} }
+#cap4{ animation-name:cap4; } @keyframes cap4{ 0%,47.5%{opacity:0;} 48%{opacity:1;} 62.5%{opacity:1;} 63%{opacity:0;} 100%{opacity:0;} }
+#cap5{ animation-name:cap5; } @keyframes cap5{ 0%,64%{opacity:0;} 64.5%{opacity:1;} 82.5%{opacity:1;} 83%{opacity:0;} 100%{opacity:0;} }
+#cap6{ animation-name:cap6; } @keyframes cap6{ 0%,84%{opacity:0;} 84.5%{opacity:1;} 99.4%{opacity:1;} 99.8%{opacity:0;} 100%{opacity:0;} }
+
+/* ---------------- field notes ---------------- */
+.notes{
+  display:grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(28px,5vw,72px);
+  padding-top: clamp(24px,4vw,40px);
+  border-top:1px solid var(--line);
+}
+@media (max-width: 720px){ .notes{ grid-template-columns:1fr; } }
+.notes h2{
+  font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--gold); font-weight:600; margin:0 0 18px;
+}
+.notes ol{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
+.notes ol li{
+  display:grid; grid-template-columns: 34px 60px 1fr; gap:14px; align-items:baseline;
+  padding:12px 0; border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.notes ol li:last-child{ border-bottom:0; }
+.notes ol li .n{ font-family:'JetBrains Mono', monospace; color:var(--ivory-dim); font-size:12px; }
+.notes ol li .tc{ font-family:'JetBrains Mono', monospace; color:var(--gold); font-size:12px; }
+.notes ol li .desc b{ font-weight:700; color:var(--ivory); }
+.notes ol li .desc span{ display:block; color:var(--ivory-dim); font-size:12.5px; margin-top:2px; }
+
+.swatches{ display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+.swatch{ display:flex; flex-direction:column; gap:6px; align-items:center; }
+.swatch i{ width:34px; height:34px; border-radius:50%; display:block; border:1px solid rgba(242,237,225,0.15); }
+.swatch span{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--ivory-dim); }
+
+.legend{ font-size:14px; line-height:1.7; color:var(--ivory-dim); max-width:52ch; }
+.legend b{ color:var(--ivory); font-weight:700; }
+.legend .serif{ font-family:'Fraunces', Georgia, serif; font-style:italic; color:var(--gold); }
+
+.philosophy{
+  margin-top:22px; padding-top:18px; border-top:1px solid var(--line);
+  font-family:'Fraunces', Georgia, serif; font-style:italic; font-size:19px;
+  color:var(--ivory); text-wrap:balance;
+}
+
+@media (prefers-reduced-motion: reduce){
+  [data-tl]{ animation:none !important; }
+  .plate, .type-mega, .type-mask{ transform:none !important; }
+}
+</style>
+
+<div class="stage">
+
+  <header class="chrome-top">
+    <div class="wordmark">Lolldaiga Woods<em>.</em></div>
+    <div class="chrome-meta">
+      <span class="tag">Director's cut</span>
+      <span class="tag">Vertical film</span>
+      <span class="tag">0:30</span>
+    </div>
+  </header>
+
+  <div class="screening">
+    <div class="film" id="film">
+      <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="hud">
+        <span id="sceneIndex">01 — CURIOSITY</span>
+        <span id="timecode">0:00 / 0:30</span>
+      </div>
+
+      <!-- SCENE 1 — 0:00–0:04 -->
+      <section class="scene">
+        <div class="plate plate-aerial s1-open" data-tl></div>
+        <div class="type-mega bleed s1-solid" data-tl>WHAT IF</div>
+        <div class="type-mask s1-mask-el" data-tl>WHAT IF</div>
+        <div class="plate plate-aerial s1-wide2" data-tl></div>
+        <div class="type-line s1-line-el" data-tl>What if the wilderness was your backyard?</div>
+      </section>
+
+      <!-- SCENE 2 — 0:04–0:09 -->
+      <section class="scene">
+        <div class="plate plate-wildlife s2-wild" data-tl>
+          <span class="tag-label">Wildlife · mid</span>
+        </div>
+        <div class="plate plate-landscape s2-land" data-tl>
+          <span class="tag-label">Landscape · wide</span>
+        </div>
+        <div class="plate plate-landscape-2 s2-crop" data-tl></div>
+        <div class="plate plate-wildlife s2-freeze" data-tl></div>
+        <div class="frame-marks s2-freeze-marks" data-tl>
+          <i></i>
+          <span class="frame-tag">FR.06 — WILDLIFE</span>
+        </div>
+        <div class="plate plate-landscape s2-back" data-tl></div>
+        <div class="type-mega s2-welcome" data-tl style="font-size:9.5cqw;">WELCOME TO</div>
+        <div class="type-mega bleed s2-lolldaiga" data-tl>LOLLDAIGA</div>
+      </section>
+
+      <!-- SCENE 3 — 0:09–0:14 -->
+      <section class="scene">
+        <div class="plate plate-arch s3-wide" data-tl>
+          <span class="tag-label">Villa garden · wide</span>
+        </div>
+        <div class="plate plate-macro s3-macro" data-tl>
+          <span class="tag-label">Texture · macro</span>
+        </div>
+        <div class="type-lower s3-acreage" data-tl>PRIVATE ACREAGE.</div>
+        <div class="plate plate-arch s3-wide2" data-tl></div>
+        <div class="type-slide s3-slide" data-tl>ZERO CROWDS.</div>
+        <div class="s3-split" data-tl>
+          <div class="split-l plate plate-arch"></div>
+          <div class="split-r plate plate-wild"></div>
+        </div>
+        <div class="split-hair s3-hair" data-tl></div>
+      </section>
+
+      <!-- SCENE 4 — 0:14–0:19 -->
+      <section class="scene">
+        <div class="plate plate-doorway s4-door" data-tl>
+          <span class="tag-label">Doorway framing</span>
+        </div>
+        <div class="type-lower s4-yourvilla" data-tl>YOUR VILLA.</div>
+        <div class="plate plate-curtain s4-curtain" data-tl></div>
+        <div class="type-lower s4-yourspace1" data-tl>YOUR SPACE.</div>
+        <div class="plate plate-door s4-doorhand" data-tl>
+          <span class="tag-label">Hand · doorway</span>
+        </div>
+        <div class="card-full s4-card" data-tl><span>YOUR SPACE.</span></div>
+        <div class="plate plate-guests s4-guests" data-tl>
+          <span class="tag-label">Guests · seated</span>
+        </div>
+      </section>
+
+      <!-- SCENE 5 — 0:19–0:25 -->
+      <section class="scene">
+        <div class="plate plate-quick1 s5-q1" data-tl></div>
+        <div class="plate plate-quick2 s5-q2" data-tl></div>
+        <div class="plate plate-quick3 s5-q3" data-tl></div>
+        <div class="plate plate-quick4 s5-q4" data-tl></div>
+        <div class="plate plate-guests s5-long" data-tl>
+          <span class="tag-label">Group · long hold</span>
+        </div>
+        <div class="number-mega s5-number" data-tl>
+          <span class="num">6–8</span>
+          <span class="lbl">GUESTS.</span>
+        </div>
+      </section>
+
+      <!-- SCENE 6 — 0:25–0:30 -->
+      <section class="scene">
+        <div class="plate plate-golden s6-golden" data-tl>
+          <span class="tag-label">Golden hour · wide</span>
+        </div>
+        <div class="type-mega s6-line1" data-tl style="font-size:11.5cqw;">ESCAPE THE ORDINARY.</div>
+        <div class="type-mega bleed s6-line2" data-tl style="font-size:10cqw;">STAY AT<br>LOLLDAIGA WOODS.</div>
+        <div class="blackframe s6-black" data-tl></div>
+        <div class="brand-card s6-brand" data-tl>
+          <div class="mark"></div>
+          <div class="word">Lolldaiga Woods</div>
+          <div class="sub">Kenya</div>
+        </div>
+      </section>
+
+      <div class="caption" id="cap1" data-tl>"What if you could wake up with the wilderness right at your doorstep?"</div>
+      <div class="caption" id="cap2" data-tl>"Welcome to the untouched beauty of Lolldaiga Hills."</div>
+      <div class="caption" id="cap3" data-tl>"Here, wide-open spaces replace crowded safari lodges…"</div>
+      <div class="caption" id="cap4" data-tl>"…and an entire villa gives your group the freedom to settle in at your own pace."</div>
+      <div class="caption" id="cap5" data-tl>"Perfect for families and groups seeking a truly private Kenyan escape."</div>
+      <div class="caption" id="cap6" data-tl>"Escape the ordinary. Stay at Lolldaiga Woods."</div>
+
+      <div class="vignette"></div>
+      <div class="grain"></div>
+
+      <div class="play-overlay" id="playOverlay">
+        <button class="play-btn" id="playBtn" aria-label="Play reel">
+          <svg width="18" height="20" viewBox="0 0 18 20" fill="none"><path d="M1 1.4v17.2a1 1 0 0 0 1.5.87l15-8.6a1 1 0 0 0 0-1.74l-15-8.6A1 1 0 0 0 1 1.4Z" fill="#c7a868"/></svg>
+        </button>
+        <div class="play-label">Tap to play — 0:30</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="notes">
+    <div>
+      <h2>Scene index</h2>
+      <ol>
+        <li><span class="n">01</span><span class="tc">0:00</span><span class="desc"><b>Curiosity</b><span>Aerial cold open → type-as-mask reveal into "WHAT IF."</span></span></li>
+        <li><span class="n">02</span><span class="tc">0:04</span><span class="desc"><b>Discovery</b><span>Wildlife/landscape montage, freeze-frame, "WELCOME TO LOLLDAIGA."</span></span></li>
+        <li><span class="n">03</span><span class="tc">0:09</span><span class="desc"><b>Contrast</b><span>Wide → macro cut, sliding "ZERO CROWDS," split-screen merge.</span></span></li>
+        <li><span class="n">04</span><span class="tc">0:14</span><span class="desc"><b>Intimacy</b><span>Doorway framing, footage drops to a graphic card, smash-cut back.</span></span></li>
+        <li><span class="n">05</span><span class="tc">0:19</span><span class="desc"><b>Connection</b><span>Four quick cuts snap into one long, still hold — "6–8 GUESTS."</span></span></li>
+        <li><span class="n">06</span><span class="tc">0:25</span><span class="desc"><b>Calm / desire</b><span>Golden hour breathes, black frame, brand lockup.</span></span></li>
+      </ol>
+    </div>
+    <div>
+      <h2>Visual system</h2>
+      <div class="swatches">
+        <div class="swatch"><i style="background:#1c1a15"></i><span>charcoal</span></div>
+        <div class="swatch"><i style="background:#f2ede1"></i><span>ivory</span></div>
+        <div class="swatch"><i style="background:#c7a868"></i><span>gold</span></div>
+        <div class="swatch"><i style="background:#454b36"></i><span>moss</span></div>
+        <div class="swatch"><i style="background:#6b4a34"></i><span>bark</span></div>
+        <div class="swatch"><i style="background:#b9633b"></i><span>ember</span></div>
+      </div>
+      <p class="legend"><b>Archivo</b> carries every graphic headline, tight and heavy. <span class="serif">Fraunces</span> appears exactly twice, as a quiet counter-voice. JetBrains Mono is reserved for timecodes, frame tags and captions — it should read like a slate, not a subtitle app.</p>
+      <p class="philosophy">"Predictable emotion, unpredictable visual language."</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var film = document.getElementById('film');
+  var playBtn = document.getElementById('playBtn');
+  var progressFill = document.getElementById('progressFill');
+  var timecodeEl = document.getElementById('timecode');
+  var sceneIndexEl = document.getElementById('sceneIndex');
+  var DUR = 30;
+
+  var scenes = [
+    {start:0,    label:'01 — CURIOSITY'},
+    {start:4,    label:'02 — DISCOVERY'},
+    {start:9,    label:'03 — CONTRAST'},
+    {start:14,   label:'04 — INTIMACY'},
+    {start:19,   label:'05 — CONNECTION'},
+    {start:25,   label:'06 — CALM / DESIRE'}
+  ];
+
+  var playing = false, startTs = 0, elapsedAtPause = 0, raf = null;
+
+  function fmt(t){
+    var s = Math.floor(t);
+    return '0:' + (s < 10 ? '0' + s : s);
+  }
+  function sceneFor(t){
+    var out = scenes[0].label;
+    for (var i = 0; i < scenes.length; i++) if (t >= scenes[i].start) out = scenes[i].label;
+    return out;
+  }
+  function paint(t){
+    progressFill.style.width = (t / DUR * 100) + '%';
+    timecodeEl.textContent = fmt(t) + ' / 0:30';
+    sceneIndexEl.textContent = sceneFor(t);
+  }
+  function loop(now){
+    var t = ((now - startTs) / 1000) % DUR;
+    paint(t);
+    raf = requestAnimationFrame(loop);
+  }
+  function play(){
+    if (playing) return;
+    playing = true;
+    film.classList.add('started', 'playing');
+    startTs = performance.now() - elapsedAtPause * 1000;
+    raf = requestAnimationFrame(loop);
+  }
+  function pause(){
+    if (!playing) return;
+    playing = false;
+    film.classList.remove('playing');
+    elapsedAtPause = ((performance.now() - startTs) / 1000) % DUR;
+    cancelAnimationFrame(raf);
+  }
+
+  playBtn.addEventListener('click', function(e){ e.stopPropagation(); play(); });
+  film.addEventListener('click', function(){
+    if (!film.classList.contains('started')) { play(); return; }
+    if (playing) { pause(); } else { play(); }
+  });
+
+  paint(0);
+})();
+</script>
